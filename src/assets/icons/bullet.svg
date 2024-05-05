@@ -1,0 +1,13 @@
+<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path id="MagicCraft" d="M5.94821 11.2948L0.703871 6.00195L5.94821 0.709067L11.2896 6.00195L5.94821 11.2948Z" fill="url(#paint0_linear_1146_12902)" stroke="url(#paint1_linear_1146_12902)"/>
+<defs>
+<linearGradient id="paint0_linear_1146_12902" x1="11.5146" y1="0.67468" x2="-1.91487" y2="4.25416" gradientUnits="userSpaceOnUse">
+<stop stop-color="#6741A5"/>
+<stop offset="1" stop-color="#270A39"/>
+</linearGradient>
+<linearGradient id="paint1_linear_1146_12902" x1="-2.17754" y1="-3.12225" x2="17.6646" y2="4.93789" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D298FF"/>
+<stop offset="1" stop-color="#D298FF" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>

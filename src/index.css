@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  background-color: #03082F;
+}
+
+@font-face {
+  font-family: "Colus";
+  src: local("Colus"), url("./assets/fonts/colus/Colus-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Futura PT";
+  src: local("Futura PT"), url("./assets/fonts/futura-pt/FuturaPTBook.otf") format("opentype"),
+    local("Futura PT"), url("./assets/fonts/futura-pt/FuturaPTBold.otf") format("opentype"),
+    local("Futura PT"), url("./assets/fonts/futura-pt/FuturaPTMedium.otf") format("opentype"),
+    local("Futura PT"), url("./assets/fonts/futura-pt/FuturaPTLight.otf") format("opentype");
+}
+
+@layer utilities {
+  .hero-bg-gradient {
+    background: linear-gradient(180deg, rgba(12, 2, 24, 0.00) 0%, #0C0218 69.1%);
+  }
+
+  .font-outline {
+    -webkit-text-stroke: 2px transparent;
+  }
+
+  .game-chips-bg {
+    background: linear-gradient(98deg, #3F107A 10.09%, #740FB1 100.25%), linear-gradient(255deg, rgba(87, 24, 109, 0.62) 4.37%, rgba(42, 13, 78, 0.62) 99.01%), rgba(45, 44, 134, 0.80);
+  }
+}
