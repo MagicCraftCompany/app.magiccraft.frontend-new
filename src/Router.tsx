@@ -13,6 +13,7 @@ const Router = () => {
       <Route element={<PledgingPage />} path="/pledging" />
       <Route element={<InventoryPage />} path="/inventory" />
       <Route element={<MintingPage />} path="/mint" />
+      {/* <Route element={<NftPage />} path='/marketplace/:nft_address/:id' /> */}
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

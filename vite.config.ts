@@ -8,6 +8,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      global: path.resolve(__dirname, 'global.d.ts'),
     },
   },
 })

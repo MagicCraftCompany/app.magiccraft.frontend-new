@@ -15,6 +15,10 @@
 // VITE_TREASURY_WALLET_ADDRESS=0xe03629571A6cC91c5c69758F310d9341a2932D53
 // VITE_CMC_API_KEY=93cac65e-8bbb-4832-9384-014f2a7793f5
 
+export const TABLET_BREAKPOINT = 688
+export const SMALL_MOBILE_BREAKPOINT = 375
+export const DESKTOP_BREAKPOINT = 1100
+
 if (!import.meta.env.VITE_MARKETPLACE_BACK_URL) {
   throw new Error('VITE_MARKETPLACE_BACK_URL is not defined')
 }
@@ -27,6 +31,20 @@ if (!import.meta.env.VITE_REVELATION_CONTRACT_ADDRESS) {
   throw new Error('VITE_REVELATION_CONTRACT_ADDRESS is not defined')
 }
 
+if (!import.meta.env.VITE_CHAIN_ID) {
+  throw new Error('VITE_CHAIN_ID is not defined')
+}
+
+if (!import.meta.env.VITE_NODE_1) {
+  throw new Error('VITE_NODE_1 is not defined')
+}
+if (!import.meta.env.VITE_NODE_2) {
+  throw new Error('VITE_NODE_2 is not defined')
+}
+if (!import.meta.env.VITE_NODE_3) {
+  throw new Error('VITE_NODE_3 is not defined')
+}
+
 export const VITE_MARKETPLACE_BACK_URL = import.meta.env
   .VITE_MARKETPLACE_BACK_URL
 
@@ -35,5 +53,11 @@ export const VITE_GENESIS_CONTRACT_ADDRESS = import.meta.env
 
 export const VITE_REVELATION_CONTRACT_ADDRESS = import.meta.env
   .VITE_REVELATION_CONTRACT_ADDRESS
+
+export const VITE_CHAIN_ID = import.meta.env.VITE_CHAIN_ID
+
+export const VITE_NODE_1 = import.meta.env.VITE_NODE_1
+export const VITE_NODE_2 = import.meta.env.VITE_NODE_2
+export const VITE_NODE_3 = import.meta.env.VITE_NODE_3
 
 export const AUTH_TOKEN_LOCAL_STORAGE_KEY = 'authToken'

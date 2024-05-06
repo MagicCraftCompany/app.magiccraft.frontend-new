@@ -57,6 +57,14 @@ module.exports = {
         serif: ['Colus', ...fontFamily.serif],
         inter: ['Inter', ...fontFamily.serif],
       },
+      gridTemplateColumns: {
+        // Simple 16 column grid
+        16: 'repeat(16, minmax(0, 1fr))',
+
+        // Complex site-specific column configuration
+        'recently-listed': 'minmax(200px, 300px) 200px 150px',
+        'recently-sold': 'minmax(200px, 300px) repeat(3,110px)',
+      },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',

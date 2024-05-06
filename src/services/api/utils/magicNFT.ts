@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  VITE_GENESIS_CONTRACT_ADDRESS,
   VITE_MARKETPLACE_BACK_URL,
-  VITE_REVELATION_CONTRACT_ADDRESS,
 } from '@/lib/constants'
 import axios from 'axios'
 
@@ -11,7 +11,10 @@ export const fetchMagicNfts = async (
   latestCall?: boolean
 ) => {
   // const contractAddress = getNftContractAddress()
-  const contractAddress = VITE_REVELATION_CONTRACT_ADDRESS
+  // const contractAddress = VITE_REVELATION_CONTRACT_ADDRESS
+
+  const contractAddress = VITE_GENESIS_CONTRACT_ADDRESS
+
   let listedNfts: any[] = []
 
   const val = localStorage.getItem('filterlist')
@@ -160,4 +163,22 @@ export const getMagicCraftAccountWithNfts = async (
   if (data && data.items.length === 0 && listedData.length == 0) return []
 
   return [...listedData, ...data.items]
+}
+
+export const getRecentlySoldNfts = async (contractAddress: string) => {
+  const { data } = await axios.get(
+    `${VITE_MARKETPLACE_BACK_URL}/recent-sold?contractAddress=${contractAddress}`
+  )
+
+  if (data && data.items.length === 0) return []
+
+  return data.items
+}
+
+export const getNFTAmountHolders = async (contractAddress: string) => {
+  const { data } = await axios.get(
+    `${process.env.REACT_APP_MARKETPLACE_BACK_URL}/nft-holder-count?contractAddress=${contractAddress}`
+  )
+
+  return data
 }

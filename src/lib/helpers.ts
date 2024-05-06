@@ -1,15 +1,17 @@
-import { ethers } from 'ethers'
+import { ethers, BigNumber } from 'ethers'
+import { VITE_CHAIN_ID, VITE_MARKETPLACE_BACK_URL } from './constants'
+import axios from 'axios'
 
 interface Nft {
   contractAddress: string
   tokenID: number
-  seller: string
-  duration: number
-  endingPrice: number
-  isMCRT: boolean
-  startAt: number
-  startingPrice: number
-  createdAt: string
+  seller?: string
+  duration?: number
+  endingPrice?: number
+  isMCRT?: boolean
+  startAt?: number
+  startingPrice?: number
+  createdAt?: string
   name: string
   description: string
   image: string
@@ -29,7 +31,6 @@ export function returnRarity(selectedNft: Nft) {
 
 export function returnClass(selectedNft: Nft) {
   let classType = ''
-  console.log(selectedNft)
   if (selectedNft.name.includes('Arcana')) {
     classType = 'Arcana'
   } else if (selectedNft.name.includes('Knight')) {
@@ -162,4 +163,42 @@ export function nFormatter(num: any, digits: any) {
   return item
     ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol
     : '0'
+}
+
+export function numberWithCommas(x: string) {
+  const parts = x.toString().split('.')
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  return parts.join('.')
+}
+
+export function showAmount(amount: number | string, isMCRT: boolean) {
+  const chainId = Number(VITE_CHAIN_ID) || 97
+
+  const E18 = BigNumber.from(10).pow(18)
+  const E9 = BigNumber.from(10).pow(9)
+
+  const balance = isMCRT
+    ? BigNumber.from(amount.toString())
+        .mul(100)
+        .div(chainId === 56 ? E9 : E18)
+        .toNumber() / 100
+    : BigNumber.from(amount.toString()).mul(100).div(E18).toNumber() / 100
+
+  return balance
+}
+
+export const getMCRTData = async () => {
+  const { data } = await axios.get(
+    'https://api.coingecko.com/api/v3/coins/magiccraft'
+  )
+
+  return data
+}
+
+export const getNFTAmountHolders = async (contractAddress: string) => {
+  const { data } = await axios.get(
+    `${VITE_MARKETPLACE_BACK_URL}/nft-holder-count?contractAddress=${contractAddress}`
+  )
+
+  return data
 }
