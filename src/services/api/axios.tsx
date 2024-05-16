@@ -5,12 +5,15 @@ import axios, { AxiosError } from 'axios'
 import {
   VITE_MARKETPLACE_BACK_URL,
   AUTH_TOKEN_LOCAL_STORAGE_KEY,
+  VITE_LOBBY_BACK_URL,
 } from '@/lib/constants'
+import { setModal } from '@/components/Modal/Modal'
 // import produce from "immer";
 
 const token = localStorage.getItem(AUTH_TOKEN_LOCAL_STORAGE_KEY)
 
-axios.defaults.baseURL = VITE_MARKETPLACE_BACK_URL
+// axios.defaults.baseURL = VITE_MARKETPLACE_BACK_URL
+axios.defaults.baseURL = VITE_LOBBY_BACK_URL
 axios.defaults.headers.common['Authorization'] = token ? token : null
 
 export default axios
@@ -39,30 +42,30 @@ axios.interceptors.response.use(
       localStorage.setItem(AUTH_TOKEN_LOCAL_STORAGE_KEY, '')
       axios.defaults.headers.common['Authorization'] = undefined
 
-      // return new Promise((resolve, reject) => {
-      //   setModal({
-      //     title: isTokenExpiredError
-      //       ? "You login session has expired"
-      //       : "Log in to continue",
-      //     onClose: () => {
-      //       reject(error);
-      //     },
-      //     content: () => (
-      //       <LoginExpiredModal
-      //         afterLogin={() => {
-      //           if (!error.config) return reject(error);
-      //           const changed = produce(error.config, () => {
-      //             if (error.config) {
-      //               error.config.headers["Authorization"] =
-      //                 localStorage.getItem(AUTH_TOKEN_LOCAL_STORAGE_KEY);
-      //             }
-      //           });
-      //           resolve(axios.request(changed));
-      //         }}
-      //       />
-      //     ),
-      //   });
-      // });
+      return new Promise((resolve, reject) => {
+        setModal({
+          title: isTokenExpiredError
+            ? 'You login session has expired'
+            : 'Log in to continue',
+          onClose: () => {
+            reject(error)
+          },
+          content: () => (
+            <LoginExpiredModal
+              afterLogin={() => {
+                if (!error.config) return reject(error)
+                const changed = produce(error.config, () => {
+                  if (error.config) {
+                    error.config.headers['Authorization'] =
+                      localStorage.getItem(AUTH_TOKEN_LOCAL_STORAGE_KEY)
+                  }
+                })
+                resolve(axios.request(changed))
+              }}
+            />
+          ),
+        })
+      })
     } else {
       return Promise.reject(error)
     }

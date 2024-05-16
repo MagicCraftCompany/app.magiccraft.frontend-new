@@ -68,9 +68,9 @@ export function getThumbnailImage(url: string) {
 }
 
 export function getNameBgColor(name: string) {
-  if (name.includes('Knight')) return '#C41E3A'
-  if (name.includes('Hunter')) return '#AAD372'
-  return '#3FC7EB'
+  if (name.includes('Knight')) return '#981A2F'
+  if (name.includes('Hunter')) return '#24A151'
+  return '#2E9DBA'
 }
 
 export function getRarityBgColor(rarity: string) {
@@ -166,9 +166,12 @@ export function nFormatter(num: any, digits: any) {
 }
 
 export function numberWithCommas(x: string) {
-  const parts = x.toString().split('.')
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-  return parts.join('.')
+  // console.log(x)
+  if (x) {
+    const parts = x.toString().split('.')
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    return parts.join('.')
+  }
 }
 
 export function showAmount(amount: number | string, isMCRT: boolean) {

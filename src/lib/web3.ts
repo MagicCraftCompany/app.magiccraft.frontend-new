@@ -2,7 +2,7 @@ import Web3 from 'web3'
 import { HttpProviderOptions } from 'web3-core-helpers'
 import { AbiItem } from 'web3-utils'
 import { ContractOptions } from 'web3-eth-contract'
-import { chainId } from '@/config'
+import { chainId } from '@/lib/constants'
 import { VITE_NODE_1, VITE_NODE_2, VITE_NODE_3 } from './constants'
 import random from 'lodash/random'
 

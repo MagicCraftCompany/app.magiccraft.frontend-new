@@ -130,7 +130,7 @@ const HeroSection = () => {
       </div>
       <div className="mx-auto mb-14 h-px w-full max-w-screen-xl bg-gradient-to-r from-transparent via-tertiary-200 to-transparent"></div>
 
-      <div className="bg-primary-600 relative mx-auto  max-w-min rounded-4xl pb-9 pl-6 pr-4 pt-5">
+      <div className="relative mx-auto max-w-min  rounded-4xl bg-primary-600 pb-9 pl-6 pr-4 pt-5">
         <div className=" grid snap-x snap-mandatory auto-cols-min grid-flow-col gap-6 overflow-x-auto overscroll-contain overscroll-x-contain">
           <Link to={'/pledging'}>
             <div className="w-56 select-none snap-start">
@@ -224,7 +224,12 @@ const HomePage = () => {
     useQuery<RecentlyListedNftArray>({
       queryKey: ['recentlyListedNFTs'],
       queryFn: async () => {
-        const data = await fetchMagicNfts(0, undefined, true)
+        const data = await fetchMagicNfts(
+          0,
+          VITE_GENESIS_CONTRACT_ADDRESS,
+          undefined,
+          true
+        )
         return data.listedNfts.length > 0 ? data.listedNfts : []
       },
     })
@@ -245,9 +250,7 @@ const HomePage = () => {
       <div className="space-y-32 pt-60 md:pt-96 lg:pt-40">
         <section className="relative mx-auto mt-0 w-11/12 max-w-screen-xl">
           <div className="space-y-20">
-            <TypographyH2 className="text-balance bg-gradient-to-b from-white to-white/75 bg-clip-text text-center font-serif text-4xl text-transparent drop-shadow-xl">
-              THIS WEEK
-            </TypographyH2>
+            <TypographyH2>THIS WEEK</TypographyH2>
 
             <div className="grid grid-cols-3 gap-10">
               <div className="relative rounded-[20px] shadow-xl">
@@ -595,7 +598,7 @@ const RecentlyListedNftItem = (nft: RecentlyListedNft) => {
     <React.Fragment>
       <div
         onClick={goToNftDetail}
-        className="grid-cols-recently-listed grid cursor-pointer gap-3"
+        className="grid cursor-pointer grid-cols-recently-listed gap-3"
       >
         <div className=" flex gap-3">
           <div>
@@ -678,7 +681,7 @@ const RecentlySoldNftItem = (nft: RecentlySoldNft) => {
     <React.Fragment>
       <div
         onClick={goToNftDetail}
-        className="grid-cols-recently-sold grid cursor-pointer gap-3"
+        className="grid cursor-pointer grid-cols-recently-sold gap-3"
       >
         <div className="flex gap-3">
           <div>
@@ -744,7 +747,7 @@ const RecentlySoldNftItem = (nft: RecentlySoldNft) => {
               <img className="h-5 w-5" src={bnbIcon} alt="bnb-logo" />
             )}
             <h2 className="text-white">
-              {numberWithCommas(showAmount(nft.price, nft.isMCRT).toFixed(0))}
+              {numberWithCommas(showAmount(nft?.price, nft?.isMCRT).toFixed(0))}
             </h2>
           </div>
 

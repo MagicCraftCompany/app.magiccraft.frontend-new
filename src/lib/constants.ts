@@ -14,13 +14,17 @@
 // VITE_NODE_3=https://bsc-dataseed.binance.org/
 // VITE_TREASURY_WALLET_ADDRESS=0xe03629571A6cC91c5c69758F310d9341a2932D53
 // VITE_CMC_API_KEY=93cac65e-8bbb-4832-9384-014f2a7793f5
-
+import BigNumber from 'bignumber.js'
 export const TABLET_BREAKPOINT = 688
 export const SMALL_MOBILE_BREAKPOINT = 375
 export const DESKTOP_BREAKPOINT = 1100
 
 if (!import.meta.env.VITE_MARKETPLACE_BACK_URL) {
   throw new Error('VITE_MARKETPLACE_BACK_URL is not defined')
+}
+
+if (!import.meta.env.VITE_LOBBY_BACK_URL) {
+  throw new Error('VITE_LOBBY_BACK_URL is not defined')
 }
 
 if (!import.meta.env.VITE_GENESIS_CONTRACT_ADDRESS) {
@@ -45,8 +49,14 @@ if (!import.meta.env.VITE_NODE_3) {
   throw new Error('VITE_NODE_3 is not defined')
 }
 
+if (!import.meta.env.VITE_SIGN_MSG) {
+  throw new Error('VITE_SIGN_MSG is not defined')
+}
+
 export const VITE_MARKETPLACE_BACK_URL = import.meta.env
   .VITE_MARKETPLACE_BACK_URL
+
+export const VITE_LOBBY_BACK_URL = import.meta.env.VITE_LOBBY_BACK_URL
 
 export const VITE_GENESIS_CONTRACT_ADDRESS = import.meta.env
   .VITE_GENESIS_CONTRACT_ADDRESS
@@ -60,4 +70,57 @@ export const VITE_NODE_1 = import.meta.env.VITE_NODE_1
 export const VITE_NODE_2 = import.meta.env.VITE_NODE_2
 export const VITE_NODE_3 = import.meta.env.VITE_NODE_3
 
+export const LOGIN_SIGN_MSG = import.meta.env.VITE_SIGN_MSG
+
 export const AUTH_TOKEN_LOCAL_STORAGE_KEY = 'authToken'
+
+export const E18 = BigNumber(10).pow(18)
+export const E9 = BigNumber(10).pow(9)
+
+export const chainId = String(VITE_CHAIN_ID) || String(97)
+export const COINGECKO_API_ENDPOINT = 'https://api.coingecko.com/api'
+export const numberRegex = /^[0-9]*\.?[0-9]*$/
+export const INVENTORY_SUBGRAPH_URL =
+  'https://api.thegraph.com/subgraphs/name/daisai3/magiccraft_nft'
+
+export const GEM_PACK_DATA = [
+  {
+    id: 1,
+    pack_name: 'Novice Shard',
+    price_in_usd: 1,
+    gems: 100,
+  },
+  {
+    id: 2,
+    pack_name: 'Apprentice Bundle',
+    price_in_usd: 5,
+    gems: 550,
+  },
+  {
+    id: 3,
+    pack_name: "Warrior's Cache",
+    price_in_usd: 10,
+    gems: 1200,
+  },
+  {
+    id: 4,
+    pack_name: "Mage's Treasury",
+    price_in_usd: 20,
+    gems: 2500,
+  },
+  {
+    id: 5,
+    pack_name: "Hero's Hoard",
+    price_in_usd: 50,
+    gems: 6500,
+  },
+  {
+    id: 6,
+    pack_name: "Legend's Vault",
+    price_in_usd: 100,
+    gems: 14000,
+  },
+] as const
+
+export const LOCAL_STORAGE_FIRST_VISIT_KEY = 'firstVisit'
+export const LOCAL_STORAGE_LOGGING_IN_OVIO = 'logging-in-ovio'

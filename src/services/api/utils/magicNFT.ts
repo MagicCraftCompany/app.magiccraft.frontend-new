@@ -7,13 +7,14 @@ import axios from 'axios'
 
 export const fetchMagicNfts = async (
   pageNumber: number,
+  contractAddress: string,
   rarity?: string[],
   latestCall?: boolean
 ) => {
   // const contractAddress = getNftContractAddress()
   // const contractAddress = VITE_REVELATION_CONTRACT_ADDRESS
 
-  const contractAddress = VITE_GENESIS_CONTRACT_ADDRESS
+  // const contractAddress = VITE_GENESIS_CONTRACT_ADDRESS
 
   let listedNfts: any[] = []
 

@@ -1,5 +1,3 @@
-import { chainId } from '@/config/index'
-
 import stakingContractJson from '@/abi/MCRTStake.json'
 import tokenContractJson from '@/abi/MCRTToken.json'
 import pointContractJson from '@/abi/points.json'
@@ -7,7 +5,7 @@ import multiCallContractJson from '@/abi/MultiCall.json'
 import magicNFTContractJson from '@/abi/MagicNFT.json'
 import marketplaceContractJson from '@/abi/Marketplace.json'
 import nftRedeemJson from '@/abi/NFTRedeem.json'
-import { VITE_REVELATION_CONTRACT_ADDRESS } from '@/lib/constants'
+import { VITE_REVELATION_CONTRACT_ADDRESS, chainId } from '@/lib/constants'
 
 export const getMCRTStakeAddress = () => {
   return stakingContractJson.contract[
