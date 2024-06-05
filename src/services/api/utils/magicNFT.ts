@@ -183,3 +183,22 @@ export const getNFTAmountHolders = async (contractAddress: string) => {
 
   return data
 }
+
+export const fetchNftInfo = async (
+  tokenId: string,
+  contractAddress: string
+) => {
+  let inventoryNft: any = {}
+
+  try {
+    inventoryNft = contractAddress
+      ? await getMagicCraftNfts(contractAddress, [tokenId])
+      : []
+  } catch (error) {
+    inventoryNft = {}
+  }
+
+  return {
+    selectedNft: inventoryNft.length > 0 ? inventoryNft[0] : null,
+  }
+}

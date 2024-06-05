@@ -18,6 +18,11 @@ import BigNumber from 'bignumber.js'
 export const TABLET_BREAKPOINT = 688
 export const SMALL_MOBILE_BREAKPOINT = 375
 export const DESKTOP_BREAKPOINT = 1100
+import noviceShard from '@/assets/images/novice-shard.png'
+import legendVault from '@/assets/images/legend-vault.png'
+import heroHoard from '@/assets/images/hero-hoard.png'
+import warriorCache from '@/assets/images/warrior-cache.png'
+import apprenticeBundle from '@/assets/images/apprentice-bundle.png'
 
 if (!import.meta.env.VITE_MARKETPLACE_BACK_URL) {
   throw new Error('VITE_MARKETPLACE_BACK_URL is not defined')
@@ -83,42 +88,70 @@ export const numberRegex = /^[0-9]*\.?[0-9]*$/
 export const INVENTORY_SUBGRAPH_URL =
   'https://api.thegraph.com/subgraphs/name/daisai3/magiccraft_nft'
 
-export const GEM_PACK_DATA = [
+export type GemPack = {
+  id: number
+  pack_name: string
+  slug: string
+  price_in_usd: number
+  gems: number
+  img: string
+  discount: number
+}
+
+export const GEM_PACK_DATA: readonly GemPack[] = [
   {
     id: 1,
     pack_name: 'Novice Shard',
+    slug: 'novice-shard',
     price_in_usd: 1,
     gems: 100,
+    img: noviceShard,
+    discount: 5,
   },
   {
     id: 2,
     pack_name: 'Apprentice Bundle',
+    slug: 'apprentice-bundle',
     price_in_usd: 5,
     gems: 550,
+    img: apprenticeBundle,
+    discount: 10,
   },
   {
     id: 3,
     pack_name: "Warrior's Cache",
+    slug: 'warriors-cache',
     price_in_usd: 10,
     gems: 1200,
+    img: warriorCache,
+    discount: 15,
   },
   {
     id: 4,
     pack_name: "Mage's Treasury",
+    slug: 'mages-treasury',
     price_in_usd: 20,
     gems: 2500,
+    img: warriorCache,
+    discount: 20,
   },
   {
     id: 5,
     pack_name: "Hero's Hoard",
+    slug: 'hero-hoard',
     price_in_usd: 50,
     gems: 6500,
+    img: heroHoard,
+    discount: 25,
   },
   {
     id: 6,
     pack_name: "Legend's Vault",
+    slug: 'legends-vault',
     price_in_usd: 100,
     gems: 14000,
+    img: legendVault,
+    discount: 30,
   },
 ] as const
 

@@ -6,13 +6,15 @@ export const getBNBPrice = async (): Promise<number | undefined> => {
       'https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd'
 
     const { data } = await axios.get<{
-      bnb: {
+      binancecoin: {
         usd: number
       }
     }>(url)
 
-    return data.bnb.usd
+    console.log(data.binancecoin.usd)
+
+    return data.binancecoin.usd
   } catch (err) {
-    return undefined
+    return 0
   }
 }

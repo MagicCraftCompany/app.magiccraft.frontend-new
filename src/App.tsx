@@ -6,14 +6,13 @@ import { useEffect, useState } from 'react'
 import { AUTH_TOKEN_LOCAL_STORAGE_KEY } from './lib/constants'
 import { setUser } from './services/state/currentUser/currentUserSlice'
 import { getCurrentUser } from './services/api/utils/user'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Button } from './components/ui/button'
 import { legalBannerKey, useOnceEver } from './hooks/useOnceEver'
 import {
   setBnbPrice,
   setMcrtPrice,
   useAppDispatch,
-  useAppSelector,
 } from './services/state/store'
 import Modal, { setModal } from '@/components/Modal/Modal'
 // import W3ModalProvider, { getUser } from '@/components/W3ModalProvider'
@@ -23,9 +22,14 @@ import SnackBar from '@/components/SnackBar/SnackBar'
 import { getBNBPrice } from './services/api/utils/bnb'
 
 function App() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(true)
   const dispatch = useAppDispatch()
-  const mcrtPrice = useAppSelector((state) => state.mcrtPrice.mcrtPrice)
+
+  const location = useLocation()
+  const showBackground = !['/nft/', '/item/'].some((path) =>
+    location.pathname.includes(path)
+  )
 
   useQuery({
     queryKey: ['mcrtPrice'],
@@ -37,8 +41,8 @@ function App() {
         return data
       }
     },
-    refetchInterval: 180_000,
-    staleTime: 180_000,
+    refetchInterval: 600_000,
+    staleTime: 600_000,
   })
 
   useQuery({
@@ -51,8 +55,8 @@ function App() {
         return data
       }
     },
-    refetchInterval: 180_000,
-    staleTime: 180_000,
+    refetchInterval: 600_000,
+    staleTime: 600_000,
   })
 
   useOnceEver(
@@ -113,7 +117,9 @@ function App() {
   return (
     <div className="min-h-dvh w-full overscroll-none text-white">
       <>
-        <div className="absolute h-[900px] w-full bg-hero bg-cover bg-center"></div>
+        {showBackground && (
+          <div className="absolute h-[900px] w-full bg-hero bg-cover bg-center"></div>
+        )}
         <div className="hero-bg-gradient absolute h-[900px] w-full"></div>
       </>
       <Header />

@@ -18,8 +18,8 @@ const Separator = React.forwardRef<
       className={cn(
         'shrink-0 self-stretch',
         orientation === 'horizontal'
-          ? 'h-[1px] w-full bg-gradient-to-r from-transparent via-tertiary-100/60 to-transparent'
-          : 'h-full w-[1px] bg-gradient-to-b from-transparent via-tertiary-100/60 to-transparent',
+          ? 'h-[1px] w-full bg-gradient-to-r from-primary-400 via-tertiary-100 to-primary-400'
+          : 'h-full w-[1px] bg-gradient-to-b from-primary-400 via-tertiary-100 to-primary-400',
         className
       )}
       {...props}
