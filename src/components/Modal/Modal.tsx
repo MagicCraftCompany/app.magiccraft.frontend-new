@@ -35,7 +35,7 @@ export default function Modal() {
 
   const backdrop = (
     <motion.div
-      className="fixed left-0 top-0 z-50 h-screen w-screen bg-blue-500/75 backdrop-blur"
+      className="fixed left-0 top-0 z-50 h-screen w-screen bg-black/75 backdrop-blur"
       variants={{
         open: {
           backdropFilter: 'blur(6px)',

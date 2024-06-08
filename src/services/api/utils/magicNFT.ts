@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  VITE_GENESIS_CONTRACT_ADDRESS,
+  // VITE_GENESIS_CONTRACT_ADDRESS,
   VITE_MARKETPLACE_BACK_URL,
 } from '@/lib/constants'
 import axios from 'axios'

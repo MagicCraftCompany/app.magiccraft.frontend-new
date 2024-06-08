@@ -34,7 +34,7 @@ import { useEffect, useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Border } from '@/components/ui/border'
 
-type ListedNft = {
+export interface ListedNft {
   contractAddress: string
   tokenID: number
   seller: string
@@ -55,7 +55,7 @@ type ListedNft = {
 
 type ListedNftArray = ListedNft[]
 
-type Rarity = 'rare' | 'epic' | 'legendary'
+export type Rarity = 'rare' | 'epic' | 'legendary'
 
 const MarketplacePage = () => {
   const mcrtPrice = useAppSelector((state) => state.mcrtPrice.mcrtPrice)
@@ -126,6 +126,10 @@ const MarketplacePage = () => {
   const [filteredGenesisNFTs, setFilteredGenesisNFTs] = useState(
     genesisNfts ?? []
   )
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   useEffect(() => {
     const filteredNFTs = revelationNFTs?.filter((nft) =>
@@ -689,7 +693,7 @@ const MarketplacePage = () => {
                       ) : (
                         <div className="grid max-w-full grid-cols-4 gap-6 lg:grid-cols-4">
                           {filteredGenesisNFTs?.map((nft) => (
-                            <NFTCard nft={nft} />
+                            <NFTCard key={nft.tokenID} nft={nft} />
                           ))}
                         </div>
                       )}

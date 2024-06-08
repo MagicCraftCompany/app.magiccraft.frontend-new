@@ -125,7 +125,7 @@ const moreLinks = [
 
 const Footer = () => {
   return (
-    <footer className="text-primary relative z-10 bg-[#03082F] pb-16 pt-32">
+    <footer className="text-primary relative z-10 bg-primary-500 pb-16 pt-32">
       <div className="mx-auto flex w-11/12 max-w-[1650px] flex-col-reverse justify-between gap-10 lg:flex-row">
         <div className="flex w-full flex-col lg:w-1/2  ">
           <div>

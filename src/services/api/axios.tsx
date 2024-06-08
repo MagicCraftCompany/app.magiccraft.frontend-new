@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios'
 // import LoginExpiredModal from "../components/Modal/modals/LoginExpiredModal";
 // import { setModal } from "../components/Modal/Modal";
 import {
-  VITE_MARKETPLACE_BACK_URL,
+  // VITE_MARKETPLACE_BACK_URL,
   AUTH_TOKEN_LOCAL_STORAGE_KEY,
   VITE_LOBBY_BACK_URL,
 } from '@/lib/constants'

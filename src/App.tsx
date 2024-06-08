@@ -116,14 +116,14 @@ function App() {
 
   return (
     <div className="min-h-dvh w-full overscroll-none text-white">
-      <>
-        {showBackground && (
+      {showBackground && (
+        <>
           <div className="absolute h-[900px] w-full bg-hero bg-cover bg-center"></div>
-        )}
-        <div className="hero-bg-gradient absolute h-[900px] w-full"></div>
-      </>
+          <div className="hero-bg-gradient absolute h-[900px] w-full"></div>
+        </>
+      )}
       <Header />
-      <main className="min-h-screen overscroll-none scroll-smooth pb-32">
+      <main className="min-h-dvh overscroll-none scroll-smooth pb-32">
         <Router />
       </main>
       <Footer />

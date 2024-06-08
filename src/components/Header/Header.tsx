@@ -1,11 +1,12 @@
 import mcLogo from '@/assets/images/magiccraft-logo.webp'
-import { ArrowUpRight, PlayCircle, X } from 'lucide-react'
+import { PlayCircle, Wallet, X } from 'lucide-react'
 import NavMenu from './Navmenu'
 import menuIcon from '@/assets/icons/menu-icon.svg'
 import { useState } from 'react'
 import NavMenuMobile from './NavMenuMobile'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { Button } from '../ui/button'
 
 export type NavMenuItemProps = {
   path?: string
@@ -194,17 +195,13 @@ const Header = () => {
                 </div>
               </a>
 
-              <button className="hidden md:block">
-                <a
-                  href="https://lobby.magiccraft.io/"
-                  rel="noreferrer noopener"
-                >
-                  <div className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#98FFF9] px-5 py-3 text-[#03082F]">
-                    <ArrowUpRight size={18} />
-                    <p>Go to Lobby</p>
-                  </div>
-                </a>
-              </button>
+              <Button
+                size={'lg'}
+                className="hidden items-center gap-2 font-bold md:flex"
+              >
+                <Wallet size={18} />
+                <span className="text-base">Connect Wallet</span>
+              </Button>
               <button
                 onClick={openSidebar}
                 className="block shrink-0 xl:hidden"
