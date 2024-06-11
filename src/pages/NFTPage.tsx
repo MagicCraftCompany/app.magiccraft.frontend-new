@@ -2,7 +2,6 @@ import { Border } from '@/components/ui/border'
 import { Button } from '@/components/ui/button'
 import { VITE_MARKETPLACE_BACK_URL } from '@/lib/constants'
 import { fetchNftInfo } from '@/services/api/utils/magicNFT'
-// import { useAppSelector } from '@/services/state/store'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { ArrowLeft, Wallet } from 'lucide-react'
@@ -60,21 +59,20 @@ const NFTPage = () => {
   const [nftPrice, setNftPrice] = useState<number | null>(null)
   const [nftPriceDollar, setNftPriceDollar] = useState<number | null>(null)
 
-  // const [isLoading, setIsLoading] = useState<boolean>(true)
-
-  const { data: selectedNFT, status: selectedNFTStatus } =
+  const { data: selectedNFT, isLoading: isSelectedNFTLoading } =
     useQuery<ISelectedNFT>({
-      queryKey: ['selectedNFT'],
+      queryKey: ['selectedNFT', tokenId, contractAddress],
       queryFn: async () => {
         if (!tokenId || !contractAddress) return null
         const data = await fetchNftInfo(tokenId, contractAddress)
 
         return data.selectedNft
       },
+      enabled: !!tokenId && !!contractAddress,
     })
 
-  const { data: NFTData, status: NFTDataStatus } = useQuery<INFTData>({
-    queryKey: ['NFTData'],
+  const { data: NFTData, isLoading: isNFTDataLoading } = useQuery<INFTData>({
+    queryKey: ['NFTData', tokenId, contractAddress],
     queryFn: async () => {
       const response = await axios.get(
         `${VITE_MARKETPLACE_BACK_URL}/auction?contractAddress=${contractAddress}&tokenID=${tokenId}`
@@ -84,6 +82,7 @@ const NFTPage = () => {
         return response.data.items[0]
       }
     },
+    enabled: !!tokenId && !!contractAddress,
   })
 
   useEffect(() => {
@@ -105,11 +104,7 @@ const NFTPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  }, [])
-
-  // console.log({ selectedNFT })
-
-  // console.log({ NFTData })
+  }, [tokenId, contractAddress])
 
   const attributes = useMemo(() => {
     const attrs = []
@@ -145,21 +140,17 @@ const NFTPage = () => {
     return attrs
   }, [selectedNFT])
 
-  console.log({ attributes })
-
   const rarity = useMemo(() => {
     return selectedNFT?.attributes?.find((it) => it.trait_type === 'rarity')
       ?.value as Rarity
   }, [selectedNFT])
 
-  console.log({ selectedNFTStatus })
-  console.log({ NFTDataStatus })
+  const isLoading = isSelectedNFTLoading || isNFTDataLoading
 
-  if (selectedNFTStatus === 'pending' || NFTDataStatus === 'pending') {
-    console.log('loading')
+  if (isLoading) {
     return (
       <div className="relative grid min-h-dvh w-full place-items-center">
-        <h2 className="text-3xl ">Loading...</h2>
+        <h2 className="font-serif text-2xl">Loading...</h2>
       </div>
     )
   }
@@ -277,7 +268,7 @@ const NFTPage = () => {
               {attributes?.length > 0 && (
                 <>
                   <Separator className="via-secondary-100/50" />
-                  <div className="space-y-1">
+                  <div className="space-y-4">
                     <h5 className="text-2xl text-tertiary-100">Abilities</h5>
 
                     <div className="grid grid-cols-2 gap-2.5">

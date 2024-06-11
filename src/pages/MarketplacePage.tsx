@@ -69,28 +69,18 @@ const MarketplacePage = () => {
     games: 'all',
   })
 
-  const [rarity, setRarity] = useState<Rarity[]>(() => [
-    'rare',
-    'epic',
-    'legendary',
-  ])
+  const [rarity, setRarity] = useState<Rarity[]>(() => {
+    const rarityParams = searchParams.get('rarity')
+    return rarityParams
+      ? (rarityParams.split(',') as Rarity[])
+      : ['rare', 'epic', 'legendary']
+  })
 
   const currentCollection = searchParams.get('collection')
   const currentSort = searchParams.get('sort')
   const currentTab = searchParams.get('tab')
   const currentType = searchParams.get('type')
   const currentGame = searchParams.get('games')
-
-  const toggleRarity = (rarityValue: Rarity) => {
-    setRarity((prevRarity) => {
-      const hasRarity = prevRarity.includes(rarityValue)
-      if (hasRarity) {
-        return prevRarity.filter((r) => r !== rarityValue)
-      } else {
-        return [...prevRarity, rarityValue]
-      }
-    })
-  }
 
   const { data: genesisNfts, status: genesisNftStatus } =
     useQuery<ListedNftArray>({
@@ -140,7 +130,9 @@ const MarketplacePage = () => {
       )
     )
 
-    if (filteredNFTs) setFilteredRevelationNFTs(filteredNFTs)
+    if (filteredNFTs) {
+      setFilteredRevelationNFTs(sortNFTs(filteredNFTs, currentSort || 'desc'))
+    }
   }, [rarity, revelationNFTs])
 
   useEffect(() => {
@@ -152,118 +144,81 @@ const MarketplacePage = () => {
       )
     )
 
-    if (filteredNFTs) setFilteredGenesisNFTs(filteredNFTs)
+    if (filteredNFTs) {
+      setFilteredGenesisNFTs(sortNFTs(filteredNFTs, currentSort || 'desc'))
+    }
   }, [rarity, genesisNfts])
 
-  // useEffect(() => {
-  //   const sortedNFTs = [...filteredRevelationNFTs].sort((a, b) => {
-  //     const nftPriceA = getCurrentPrice(a)
-  //     const nftPriceDollarA = mcrtPrice !== undefined && nftPriceA * mcrtPrice
+  const sortNFTs = (
+    nfts: ListedNftArray,
+    sortOrder: string
+  ): ListedNftArray => {
+    return nfts.sort((a, b) => {
+      const isMcrtNFTA = a.isMCRT
+      const isMcrtNFTB = b.isMCRT
 
-  //     const nftPriceB = getCurrentPrice(b)
-  //     const nftPriceDollarB = mcrtPrice !== undefined && nftPriceB * mcrtPrice
+      const nftPriceA = getCurrentPrice(a)
+      const nftPriceDollarA =
+        bnbPrice &&
+        mcrtPrice &&
+        (isMcrtNFTA ? nftPriceA * mcrtPrice : nftPriceA * bnbPrice)
 
-  //     if (currentSort === 'asc') {
-  //       return (nftPriceDollarA as number) - (nftPriceDollarB as number) // Ascending order
-  //     } else {
-  //       return (nftPriceDollarB as number) - (nftPriceDollarA as number) // Descending order
-  //     }
-  //   })
+      const nftPriceB = getCurrentPrice(b)
+      const nftPriceDollarB =
+        bnbPrice &&
+        mcrtPrice &&
+        (isMcrtNFTB ? nftPriceB * mcrtPrice : nftPriceB * bnbPrice)
 
-  //   setFilteredRevelationNFTs(sortedNFTs)
-  // }, [currentSort, mcrtPrice])
+      if (sortOrder === 'asc') {
+        return (nftPriceDollarA as number) - (nftPriceDollarB as number) // Ascending order
+      } else {
+        return (nftPriceDollarB as number) - (nftPriceDollarA as number) // Descending order
+      }
+    })
+  }
 
-  // useEffect(() => {
-  //   const sortedNFTs = [...filteredGenesisNFTs].sort((a, b) => {
-  //     const isMcrtNFTA = a.isMCRT
-  //     const isMcrtNFTB = b.isMCRT
+  const handleSortChange = () => {
+    setSearchParams(
+      (prev) => {
+        prev.set('sort', currentSort === 'desc' ? 'asc' : 'desc')
+        return prev
+      },
+      { replace: true }
+    )
 
-  //     const nftPriceA = getCurrentPrice(a)
-  //     const nftPriceDollarA =
-  //       bnbPrice &&
-  //       mcrtPrice &&
-  //       (isMcrtNFTA ? nftPriceA * mcrtPrice : nftPriceA * bnbPrice)
-
-  //     const nftPriceB = getCurrentPrice(b)
-  //     const nftPriceDollarB =
-  //       bnbPrice &&
-  //       mcrtPrice &&
-  //       (isMcrtNFTB ? nftPriceB * mcrtPrice : nftPriceB * bnbPrice)
-
-  //     if (currentSort === 'asc') {
-  //       return (nftPriceDollarA as number) - (nftPriceDollarB as number) // Ascending order
-  //     } else {
-  //       return (nftPriceDollarB as number) - (nftPriceDollarA as number) // Descending order
-  //     }
-  //   })
-
-  //   setFilteredGenesisNFTs(sortedNFTs)
-  // }, [currentSort, bnbPrice, mcrtPrice])
-
-  const sortNFTs = () => {
-    if (currentSort === 'asc') {
-      setSearchParams(
-        (prev) => {
-          prev.set('sort', 'desc')
-          return prev
-        },
-        { replace: true }
-      )
-    } else {
-      setSearchParams(
-        (prev) => {
-          prev.set('sort', 'asc')
-          return prev
-        },
-        { replace: true }
+    if (filteredGenesisNFTs) {
+      setFilteredGenesisNFTs(
+        sortNFTs(filteredGenesisNFTs, currentSort === 'desc' ? 'asc' : 'desc')
       )
     }
-
-    if (currentCollection === 'genesis') {
-      const sortedNFTs = [...filteredGenesisNFTs].sort((a, b) => {
-        const isMcrtNFTA = a.isMCRT
-        const isMcrtNFTB = b.isMCRT
-
-        const nftPriceA = getCurrentPrice(a)
-        const nftPriceDollarA =
-          bnbPrice &&
-          mcrtPrice &&
-          (isMcrtNFTA ? nftPriceA * mcrtPrice : nftPriceA * bnbPrice)
-
-        const nftPriceB = getCurrentPrice(b)
-        const nftPriceDollarB =
-          bnbPrice &&
-          mcrtPrice &&
-          (isMcrtNFTB ? nftPriceB * mcrtPrice : nftPriceB * bnbPrice)
-
-        if (currentSort === 'desc') {
-          return (nftPriceDollarA as number) - (nftPriceDollarB as number) // Ascending order
-        } else {
-          return (nftPriceDollarB as number) - (nftPriceDollarA as number) // Descending order
-        }
-      })
-
-      setFilteredGenesisNFTs(sortedNFTs)
-    } else {
-      const sortedNFTs = [...filteredRevelationNFTs].sort((a, b) => {
-        const nftPriceA = getCurrentPrice(a)
-        const nftPriceDollarA = mcrtPrice !== undefined && nftPriceA * mcrtPrice
-
-        const nftPriceB = getCurrentPrice(b)
-        const nftPriceDollarB = mcrtPrice !== undefined && nftPriceB * mcrtPrice
-
-        if (currentSort === 'desc') {
-          return (nftPriceDollarA as number) - (nftPriceDollarB as number) // Ascending order
-        } else {
-          return (nftPriceDollarB as number) - (nftPriceDollarA as number) // Descending order
-        }
-      })
-
-      setFilteredRevelationNFTs(sortedNFTs)
+    if (filteredRevelationNFTs) {
+      setFilteredRevelationNFTs(
+        sortNFTs(
+          filteredRevelationNFTs,
+          currentSort === 'desc' ? 'asc' : 'desc'
+        )
+      )
     }
   }
 
-  console.log('here')
+  const toggleRarity = (rarityValue: Rarity) => {
+    setRarity((prevRarity) => {
+      const hasRarity = prevRarity.includes(rarityValue)
+      const newRarity = hasRarity
+        ? prevRarity.filter((r) => r !== rarityValue)
+        : [...prevRarity, rarityValue]
+
+      // Update the searchParams directly here
+      const newSearchParams = new URLSearchParams(searchParams)
+      newSearchParams.set('rarity', newRarity.join(','))
+      setSearchParams(newSearchParams, { replace: true })
+
+      return newRarity
+    })
+
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
     <section className="relative px-6">
       <div className="space-y-12 pt-10">
@@ -352,7 +307,7 @@ const MarketplacePage = () => {
                       <p>Collection</p>
                       <div className="flex flex-wrap items-center gap-1.5 rounded-[30px] border-2 border-[#202660] p-1.5">
                         <div
-                          onClick={() =>
+                          onClick={() => {
                             setSearchParams(
                               (prev) => {
                                 prev.set('collection', 'genesis')
@@ -360,7 +315,9 @@ const MarketplacePage = () => {
                               },
                               { replace: true }
                             )
-                          }
+
+                            window.scrollTo({ top: 0, behavior: 'smooth' })
+                          }}
                           className={cn(
                             'flex cursor-pointer items-center gap-1 rounded-full p-2 text-secondary-100',
                             {
@@ -373,7 +330,7 @@ const MarketplacePage = () => {
                           <span>Genesis</span>
                         </div>
                         <div
-                          onClick={() =>
+                          onClick={() => {
                             setSearchParams(
                               (prev) => {
                                 prev.set('collection', 'revelation')
@@ -381,7 +338,8 @@ const MarketplacePage = () => {
                               },
                               { replace: true }
                             )
-                          }
+                            window.scrollTo({ top: 0, behavior: 'smooth' })
+                          }}
                           className={cn(
                             'flex cursor-pointer items-center gap-1 rounded-full p-2 text-secondary-100',
                             {
@@ -659,7 +617,7 @@ const MarketplacePage = () => {
                   <div className="text-secondary-100">
                     {currentSort === 'desc' || currentSort === '' ? (
                       <div
-                        onClick={() => sortNFTs()}
+                        onClick={() => handleSortChange()}
                         className="flex cursor-pointer items-center gap-2"
                       >
                         <p className="font-semibold">Highest Price First</p>
@@ -667,7 +625,7 @@ const MarketplacePage = () => {
                       </div>
                     ) : (
                       <div
-                        onClick={() => sortNFTs()}
+                        onClick={() => handleSortChange()}
                         className="flex cursor-pointer items-center gap-2"
                       >
                         <p className="font-semibold">Lowest Price First</p>
@@ -683,7 +641,9 @@ const MarketplacePage = () => {
                   {currentCollection === 'genesis' ? (
                     <div>
                       {genesisNftStatus === 'pending' ? (
-                        <div>Loading...</div>
+                        <div className="text-center font-sans text-2xl text-slate-200 ">
+                          Loading...
+                        </div>
                       ) : filteredGenesisNFTs.length === 0 ? (
                         <div>
                           <p className="text-center font-sans text-2xl text-slate-200">
@@ -701,7 +661,9 @@ const MarketplacePage = () => {
                   ) : (
                     <div>
                       {revelationNftStatus === 'pending' ? (
-                        <div>Loading...</div>
+                        <div className="text-center font-sans text-2xl text-slate-200">
+                          Loading...
+                        </div>
                       ) : filteredRevelationNFTs.length === 0 ? (
                         <div>
                           <p className="text-center font-sans text-2xl text-slate-200">
@@ -711,7 +673,7 @@ const MarketplacePage = () => {
                       ) : (
                         <div className="grid max-w-full auto-cols-fr auto-rows-min gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
                           {filteredRevelationNFTs?.map((nft) => (
-                            <NFTCard nft={nft} />
+                            <NFTCard key={nft.tokenID} nft={nft} />
                           ))}
                         </div>
                       )}
@@ -720,7 +682,9 @@ const MarketplacePage = () => {
                 </>
               ) : currentTab === 'items' ? (
                 <div className="grid max-w-full grid-cols-4 gap-6 lg:grid-cols-4">
-                  {GEM_PACK_DATA?.map((item) => <GemPackCard item={item} />)}
+                  {GEM_PACK_DATA?.map((item) => (
+                    <GemPackCard key={item.id} item={item} />
+                  ))}
                 </div>
               ) : (
                 <div className="grid place-items-center font-serif text-2xl text-slate-300">
@@ -788,7 +752,7 @@ function NFTCard({ nft }: { nft: ListedNft }) {
             </Badge>
 
             <div className="absolute bottom-0 w-full bg-gradient-to-b from-transparent to-primary-400 px-6 py-4">
-              <p className="pb-1 font-serif text-xl drop-shadow">
+              <p className="pb-1 font-serif text-xl drop-shadow-md">
                 {nft.name.split(',')[0]}
               </p>
 
@@ -848,13 +812,13 @@ function GemPackCard({ item }: { item: GemPack }) {
     itemPrice = itemPriceDollar / mcrtPrice
   }
   return (
-    <Link to={`/item/${item.id}`}>
-      <Border className="h-fit" variant={'rare'}>
-        <div key={item.id} className="h-full  rounded-2xl  p-[2px]">
-          <div className="relative">
+    <Link className="w-[240px]" to={`/item/${item.id}`}>
+      <Border className="h-fit w-full" variant={'rare'}>
+        <div key={item.id} className="h-full w-full rounded-2xl  p-[2px]">
+          <div className="relative w-full">
             <div className="w-full">
               <img
-                className="min-h-[240px] rounded-t-2xl bg-primary-500 object-cover"
+                className="min-h-[240px] w-full rounded-t-2xl bg-primary-500 object-cover"
                 src={item.img}
                 alt="avatar"
                 loading="lazy"
