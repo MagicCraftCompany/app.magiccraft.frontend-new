@@ -32,9 +32,11 @@ import {
 import React from 'react'
 import { VITE_GENESIS_CONTRACT_ADDRESS } from '@/lib/constants'
 import nftImages from '@/assets/images/nft-Images.webp'
+import { Border } from '@/components/ui/border'
+import { Rarity } from './MarketplacePage'
 // import { useMagicNFT } from '@/hooks/useContract'
 
-const utilities = [
+export const utilities = [
   {
     title: 'Genesis Avatar',
     desc: 'Whitelisted users will have the first opportunity to purchase Genesis avatar NFTs during the pre-sale',
@@ -371,29 +373,33 @@ const HomePage = () => {
               <div className="space-y-8 rounded-4xl bg-primary-400 p-4">
                 <div className="min-h-[500px] rounded-[20px] bg-primary-300 px-5 py-5">
                   <div className="pb-5">
-                    <h4 className="text-center font-inter text-lg font-semibold tracking-wider text-white/90">
+                    <h4 className="text-center font-serif text-lg font-semibold tracking-wider text-white/90">
                       Recently Listed
                     </h4>
                   </div>
                   {recentlyListedNftStatus === 'error' ? (
-                    <div>Something went wrong</div>
+                    <div className="w-full pt-5 text-center">
+                      Something went wrong
+                    </div>
                   ) : recentlyListedNftStatus === 'pending' ? (
-                    <div>Loading...</div>
+                    <div className="w-full pt-5 text-center">Loading...</div>
                   ) : (
                     <div className="space-y-3">
                       <div className="h-px w-full bg-gradient-to-r from-transparent via-tertiary-200/40 to-transparent"></div>
                       {recentlyListedNfts
                         ?.slice(0, 10)
-                        ?.map((nft, idx) => (
-                          <RecentlyListedNftItem key={idx} {...nft} />
+                        ?.map((nft) => (
+                          <RecentlyListedNftItem key={nft.tokenID} {...nft} />
                         ))}
                     </div>
                   )}
                 </div>
                 <div className="grid place-items-center">
-                  <Button variant={'ghost'} className="gap-2">
-                    <ArrowRight size={18} color="#fff" />
-                    <p className="text-lg">View more on Marketplace</p>
+                  <Button asChild variant={'ghost'} className="gap-2">
+                    <Link to={'/marketplace'}>
+                      <ArrowRight size={18} color="#fff" />
+                      <p className="text-lg">View more on Marketplace</p>
+                    </Link>
                   </Button>
                 </div>
               </div>
@@ -402,29 +408,33 @@ const HomePage = () => {
               <div className="space-y-8 rounded-4xl bg-primary-400 p-4">
                 <div className="min-h-[500px] rounded-[20px] bg-primary-300 px-5 py-5">
                   <div className="pb-5">
-                    <h4 className="text-center font-inter text-lg font-semibold tracking-wider text-white/90">
+                    <h4 className="text-center font-serif text-lg font-semibold tracking-wider text-white/90">
                       Recently Sold
                     </h4>
                   </div>
                   {recentlySoldNftStatus === 'error' ? (
-                    <div>Something went wrong</div>
+                    <div className="w-full pt-5 text-center">
+                      Something went wrong
+                    </div>
                   ) : recentlySoldNftStatus === 'pending' ? (
-                    <div>Loading...</div>
+                    <div className="w-full pt-5 text-center">Loading...</div>
                   ) : (
                     <div className="space-y-3">
                       <div className="h-px w-full bg-gradient-to-r from-transparent via-tertiary-200/40 to-transparent"></div>
                       {recentlySoldNfts
                         ?.slice(0, 10)
-                        ?.map((nft, idx) => (
-                          <RecentlySoldNftItem key={idx} {...nft} />
+                        ?.map((nft) => (
+                          <RecentlySoldNftItem key={nft.tokenID} {...nft} />
                         ))}
                     </div>
                   )}
                 </div>
                 <div className="grid place-items-center">
-                  <Button variant={'ghost'} className="gap-2">
-                    <ArrowRight size={18} color="#fff" />
-                    <p className="text-lg">View more on Marketplace</p>
+                  <Button asChild variant={'ghost'} className="gap-2">
+                    <Link to={'/marketplace'}>
+                      <ArrowRight size={18} color="#fff" />
+                      <p className="text-lg">View more on Marketplace</p>
+                    </Link>
                   </Button>
                 </div>
               </div>
@@ -588,11 +598,11 @@ const RecentlyListedNftItem = (nft: RecentlyListedNft) => {
   const navigate = useNavigate()
 
   const rarity = returnRarity(nft)
-  const isVideo = nft.image.includes('mp4')
+  const isVideo = nft?.image?.includes('mp4')
   const _class = returnClass(nft)
 
   const goToNftDetail = () => {
-    navigate(`/marketplace/${nft.contractAddress}/${nft.tokenID}`)
+    navigate(`/nft/${nft.contractAddress}/${nft.tokenID}`)
   }
   return (
     <React.Fragment>
@@ -607,15 +617,20 @@ const RecentlyListedNftItem = (nft: RecentlyListedNft) => {
                 loop
                 muted
                 autoPlay
-                src={getThumbnailImage(nft.image)}
-                className="h-16 w-16"
+                src={getThumbnailImage(nft?.image)}
+                className="h-16 w-16 rounded-sm"
               />
             ) : (
-              <img
-                src={getThumbnailImage(nft.image)}
-                alt="nft"
-                className="h-16 w-16"
-              />
+              <Border
+                className="h-fit w-fit rounded-sm p-1"
+                variant={rarity?.toLowerCase() as Rarity}
+              >
+                <img
+                  src={getThumbnailImage(nft?.image)}
+                  alt="nft"
+                  className="h-14 w-14 rounded-sm"
+                />
+              </Border>
             )}
           </div>
           <div className="space-y-1 font-inter">
@@ -662,19 +677,19 @@ const RecentlyListedNftItem = (nft: RecentlyListedNft) => {
           <p></p>
         </div>
       </div>
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-tertiary-200/40 to-transparent"></div>
+      <Separator className="via-tertiary-200/40" />
     </React.Fragment>
   )
 }
 
 const RecentlySoldNftItem = (nft: RecentlySoldNft) => {
   const navigate = useNavigate()
-  const isVideo = nft.nftItem.image.includes('mp4')
-  const rarity = returnRarity(nft.nftItem)
-  const _class = returnClass(nft.nftItem)
+  const isVideo = nft?.nftItem?.image?.includes('mp4')
+  const rarity = returnRarity(nft?.nftItem)
+  const _class = returnClass(nft?.nftItem)
 
   const goToNftDetail = () => {
-    navigate(`/marketplace/${nft.contractAddress}/${nft.tokenID}`)
+    navigate(`/nft/${nft.contractAddress}/${nft.tokenID}`)
   }
 
   return (
@@ -690,15 +705,20 @@ const RecentlySoldNftItem = (nft: RecentlySoldNft) => {
                 loop
                 muted
                 autoPlay
-                src={getThumbnailImage(nft.nftItem.image)}
+                src={getThumbnailImage(nft?.nftItem?.image)}
                 className="h-16 w-16"
               />
             ) : (
-              <img
-                src={getThumbnailImage(nft.nftItem.image)}
-                alt="nft"
-                className="h-16 w-16"
-              />
+              <Border
+                className="h-fit w-fit rounded-sm p-1"
+                variant={rarity?.toLowerCase() as Rarity}
+              >
+                <img
+                  src={getThumbnailImage(nft?.nftItem?.image)}
+                  alt="nft"
+                  className="h-14 w-14 rounded-sm"
+                />
+              </Border>
             )}
           </div>
           <div className="space-y-1 font-inter">
@@ -754,7 +774,7 @@ const RecentlySoldNftItem = (nft: RecentlySoldNft) => {
           <p></p>
         </div>
       </div>
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-tertiary-200/40 to-transparent"></div>
+      <Separator className="via-tertiary-200/40" />
     </React.Fragment>
   )
 }

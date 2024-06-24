@@ -1,90 +1,97 @@
-// /* eslint-disable @typescript-eslint/no-explicit-any */
-// import { useEffect, useState } from 'react'
-// import Web3 from 'web3'
-// // import useWeb3 from './useWeb3'
-// import {
-//   getMCRTStakeAddress,
-//   getMCRTTokenAddress,
-//   getPointsAddress,
-//   getMarketplaceAddress,
-//   getNFTRedeemAddress,
-//   getRevelationAddress,
-// } from '@/lib/addressHelpers'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from 'react'
+import Web3 from 'web3'
+// import useWeb3 from './useWeb3'
+import {
+  getMCRTStakeAddress,
+  getMCRTTokenAddress,
+  getPointsAddress,
+  getMarketplaceAddress,
+  getNFTRedeemAddress,
+  getRevelationAddress,
+} from '@/lib/addressHelpers'
 
-// import stakingContractJson from '@/abi/MCRTStake.json'
-// import tokenContractJson from '@/abi/MCRTToken.json'
-// import pointContractJson from '@/abi/points.json'
-// import magicNFTContractJson from '@/abi/MagicNFT.json'
-// import marketplaceJson from '@/abi/Marketplace.json'
-// import nftRedeemJson from '@/abi/NFTRedeem.json'
-// import RevelationABIJson from '@/abi/Revelation.abi.json'
+import stakingContractJson from '@/abi/MCRTStake.json'
+import tokenContractJson from '@/abi/MCRTToken.json'
+import pointContractJson from '@/abi/points.json'
+import magicNFTContractJson from '@/abi/MagicNFT.json'
+import marketplaceJson from '@/abi/Marketplace.json'
+import nftRedeemJson from '@/abi/NFTRedeem.json'
+import RevelationABIJson from '@/abi/Revelation.abi.json'
 
-// import { getWeb3NoAccount } from '@/lib/web3'
+import { getWeb3NoAccount } from '@/lib/web3'
+import {
+  VITE_GENESIS_CONTRACT_ADDRESS,
+  VITE_REVELATION_CONTRACT_ADDRESS,
+} from '@/lib/constants'
+//web3
+const web3 = (window as any).ethereum
+  ? new Web3((window as any).ethereum)
+  : getWeb3NoAccount()
 
-// //web3
-// const web3 = window.ethereum ? new Web3(window.ethereum) : getWeb3NoAccount()
+console.log(web3)
 
-// const useContract = (abi: any, address: any, contractOptions = null) => {
-//   // const web3 = useWeb3();
-//   // let web3 = new Web3(window.ethereum);
-//   const [contract, setContract] = useState(
-//     new web3.eth.Contract(abi, address, contractOptions)
-//   )
+const useContract = (abi: any, address: any, contractOptions = undefined) => {
+  const [contract, setContract] = useState(
+    new web3.eth.Contract(abi, address, contractOptions)
+  )
 
-//   useEffect(() => {
-//     setContract(new web3.eth.Contract(abi, address, contractOptions))
-//   }, [abi, address, contractOptions, web3])
+  console.log(contract)
 
-//   return contract
-// }
+  useEffect(() => {
+    setContract(new web3.eth.Contract(abi, address, contractOptions))
+  }, [abi, address, contractOptions, web3])
 
-// /**
-//  * Helper hooks to get specific contracts (by ABI)
-//  */
+  return contract
+}
 
-// export const useStakeContract = () => {
-//   return useContract(stakingContractJson.abi, getMCRTStakeAddress())
-// }
+/**
+ * Helper hooks to get specific contracts (by ABI)
+ */
 
-// export const usePointContract = () => {
-//   return useContract(pointContractJson.abi, getPointsAddress())
-// }
+export const useStakeContract = () => {
+  return useContract(stakingContractJson.abi, getMCRTStakeAddress())
+}
 
-// export const useMCRT = () => {
-//   return useContract(tokenContractJson.abi, getMCRTTokenAddress())
-// }
+export const usePointContract = () => {
+  return useContract(pointContractJson.abi, getPointsAddress())
+}
 
-// export const useRevelation = () => {
-//   return useContract(RevelationABIJson, getRevelationAddress())
-// }
+export const useMCRT = () => {
+  return useContract(tokenContractJson.abi, getMCRTTokenAddress())
+}
 
-// export const useMagicNFT = (contractAddress = null) => {
-//   const currentCollection = localStorage.getItem('collection')
-//   let address
+export const useRevelation = () => {
+  return useContract(RevelationABIJson, getRevelationAddress())
+}
 
-//   switch (currentCollection) {
-//     case 'genesis':
-//     default: {
-//       address = process.env.REACT_APP_GENESIS_CONTRACT_ADDRESS || ''
-//       break
-//     }
-//     case 'revelation':
-//       address = process.env.REACT_APP_REVELATION_CONTRACT_ADDRESS || ''
-//   }
+export const useMagicNFT = (contractAddress = null) => {
+  const currentCollection = localStorage.getItem('collection')
+  let address
 
-//   if (contractAddress) {
-//     address = contractAddress
-//   }
+  switch (currentCollection) {
+    case 'genesis':
+    default: {
+      address = VITE_GENESIS_CONTRACT_ADDRESS
+      break
+    }
+    case 'revelation':
+      address = VITE_REVELATION_CONTRACT_ADDRESS
+  }
 
-//   return useContract(magicNFTContractJson.abi, address)
-// }
+  if (contractAddress) {
+    address = contractAddress
+  }
 
-// export const useMarketplaceContract = () => {
-//   return useContract(marketplaceJson.abi, getMarketplaceAddress())
-// }
+  return useContract(magicNFTContractJson.abi, address)
+}
 
-// export const useNFTRedeemContract = () => {
-//   return useContract(nftRedeemJson.abi, getNFTRedeemAddress())
-// }
+export const useMarketplaceContract = () => {
+  return useContract(marketplaceJson.abi, getMarketplaceAddress())
+}
 
-// export default useContract
+export const useNFTRedeemContract = () => {
+  return useContract(nftRedeemJson.abi, getNFTRedeemAddress())
+}
+
+export default useContract

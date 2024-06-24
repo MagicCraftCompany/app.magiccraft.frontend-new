@@ -700,7 +700,7 @@ const MarketplacePage = () => {
 }
 
 function NFTCard({ nft }: { nft: ListedNft }) {
-  const isMcrtNFT = nft.isMCRT
+  const isMcrtNFT = nft?.isMCRT
   const mcrtPrice = useAppSelector((state) => state.mcrtPrice.mcrtPrice)
   const bnbPrice = useAppSelector((state) => state.bnbPrice.bnbPrice)
 
@@ -710,7 +710,7 @@ function NFTCard({ nft }: { nft: ListedNft }) {
       ? nftPrice * mcrtPrice
       : bnbPrice !== undefined && nftPrice * bnbPrice
 
-  const rarity = nft.attributes.find(
+  const rarity = nft?.attributes?.find(
     (val) => val.trait_type === 'rarity'
   )?.value
 

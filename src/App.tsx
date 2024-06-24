@@ -22,7 +22,6 @@ import SnackBar from '@/components/SnackBar/SnackBar'
 import { getBNBPrice } from './services/api/utils/bnb'
 
 function App() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(true)
   const dispatch = useAppDispatch()
 
@@ -30,6 +29,9 @@ function App() {
   const showBackground = !['/nft/', '/item/'].some((path) =>
     location.pathname.includes(path)
   )
+
+  const isMintingPage = location.pathname.includes('/mint')
+  const isPledgingPage = location.pathname.includes('/pledging')
 
   useQuery({
     queryKey: ['mcrtPrice'],
@@ -97,29 +99,37 @@ function App() {
     []
   )
 
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 0)
+  // useEffect(() => {
+  //   setTimeout(() => setLoading(false), 0)
 
-    function ovio() {
-      const params = getOvioDataFromUrl(window.location.href)
+  //   function ovio() {
+  //     const params = getOvioDataFromUrl(window.location.href)
 
-      init(params.gamerId || '', 'd73f3eb6-412a-4f34-a672-0e9d580b4824')
-    }
+  //     init(params.gamerId || '', 'd73f3eb6-412a-4f34-a672-0e9d580b4824')
+  //   }
 
-    if (localStorage.getItem(AUTH_TOKEN_LOCAL_STORAGE_KEY)) {
-      getCurrentUser().then((user) => {
-        dispatch(setUser(user))
-      })
-    }
-    ovio()
-  }, [])
+  //   if (localStorage.getItem(AUTH_TOKEN_LOCAL_STORAGE_KEY)) {
+  //     getCurrentUser().then((user) => {
+  //       dispatch(setUser(user))
+  //     })
+  //   }
+  //   ovio()
+  // }, [])
 
   return (
     <div className="min-h-dvh w-full overscroll-none text-white">
       {showBackground && (
         <>
-          <div className="absolute h-[900px] w-full bg-hero bg-cover bg-center"></div>
-          <div className="hero-bg-gradient absolute h-[900px] w-full"></div>
+          {isMintingPage ? (
+            <div className="absolute h-[900px] w-full bg-hero-mint bg-cover bg-center"></div>
+          ) : isPledgingPage ? (
+            <div className="bg-hero-pledging absolute h-[900px] w-full bg-cover bg-center"></div>
+          ) : (
+            <>
+              <div className="absolute h-[900px] w-full bg-hero bg-cover bg-center" />
+              <div className="hero-bg-gradient absolute h-[900px] w-full" />
+            </>
+          )}
         </>
       )}
       <Header />

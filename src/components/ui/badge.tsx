@@ -14,6 +14,7 @@ const badgeVariants = cva(
           'bg-gradient-to-b from-[#DDBA56] to-[#E26B06] text-white hover:bg-slate-900/80',
         discount:
           'bg-gradient-to-b from-[#24A151] to-[#4EAF71] text-white hover:bg-slate-900/80',
+        mint: 'bg-[#4312694D] text-white',
       },
     },
     defaultVariants: {

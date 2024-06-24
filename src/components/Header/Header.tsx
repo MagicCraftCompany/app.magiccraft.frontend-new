@@ -195,10 +195,7 @@ const Header = () => {
                 </div>
               </a>
 
-              <Button
-                size={'lg'}
-                className="hidden items-center gap-2 font-bold md:flex"
-              >
+              <Button className="hidden items-center gap-2 font-bold md:flex">
                 <Wallet size={18} />
                 <span className="text-base">Connect Wallet</span>
               </Button>

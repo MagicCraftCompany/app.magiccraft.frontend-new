@@ -16,6 +16,8 @@ module.exports = {
     extend: {
       backgroundImage: {
         hero: "url('/img/hero-new.webp')",
+        'hero-mint': "url('/img/hero-mint.webp')",
+        'hero-pledging': "url('/img/hero-pledging-page.webp')",
       },
       keyframes: {
         'accordion-down': {

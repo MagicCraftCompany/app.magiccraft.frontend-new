@@ -3,6 +3,7 @@ import currentUserReducer from './currentUser/currentUserSlice'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { Atom, swap, deref } from '@dbeining/react-atom'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import nftMintReducer from './nftmint'
 // import { createAppAsyncThunk } from './helpers'
 // import { getBalance } from '../services/blockchain'
 // import { E9 } from '@/lib/constants'
@@ -76,6 +77,7 @@ const store = configureStore({
     currentUser: currentUserReducer,
     mcrtPrice: mcrtSlice.reducer,
     bnbPrice: bnbSlice.reducer,
+    nftmint: nftMintReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
