@@ -42,7 +42,7 @@ axios.interceptors.response.use(
       localStorage.setItem(AUTH_TOKEN_LOCAL_STORAGE_KEY, '')
       axios.defaults.headers.common['Authorization'] = undefined
 
-      return new Promise((resolve, reject) => {
+      return new Promise((_resolve, reject) => {
         setModal({
           title: isTokenExpiredError
             ? 'You login session has expired'
@@ -51,18 +51,19 @@ axios.interceptors.response.use(
             reject(error)
           },
           content: () => (
-            <LoginExpiredModal
-              afterLogin={() => {
-                if (!error.config) return reject(error)
-                const changed = produce(error.config, () => {
-                  if (error.config) {
-                    error.config.headers['Authorization'] =
-                      localStorage.getItem(AUTH_TOKEN_LOCAL_STORAGE_KEY)
-                  }
-                })
-                resolve(axios.request(changed))
-              }}
-            />
+            // <LoginExpiredModal
+            //   afterLogin={() => {
+            //     if (!error.config) return reject(error)
+            //     const changed = produce(error.config, () => {
+            //       if (error.config) {
+            //         error.config.headers['Authorization'] =
+            //           localStorage.getItem(AUTH_TOKEN_LOCAL_STORAGE_KEY)
+            //       }
+            //     })
+            //     resolve(axios.request(changed))
+            //   }}
+            // />
+            <></>
           ),
         })
       })

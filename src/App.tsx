@@ -1,11 +1,10 @@
 import Footer from '@/components/Footer/Footer'
 import Header from '@/components/Header/Header'
 import Router from '@/Router'
-import { getOvioDataFromUrl, init } from 'ovio-gg-web3'
-import { useEffect, useState } from 'react'
-import { AUTH_TOKEN_LOCAL_STORAGE_KEY } from './lib/constants'
-import { setUser } from './services/state/currentUser/currentUserSlice'
-import { getCurrentUser } from './services/api/utils/user'
+// import {  useState } from 'react'
+// import { AUTH_TOKEN_LOCAL_STORAGE_KEY } from './lib/constants'
+// import { setUser } from './services/state/currentUser/currentUserSlice'
+// import { getCurrentUser } from './services/api/utils/user'
 import { Link, useLocation } from 'react-router-dom'
 import { Button } from './components/ui/button'
 import { legalBannerKey, useOnceEver } from './hooks/useOnceEver'
@@ -22,7 +21,7 @@ import SnackBar from '@/components/SnackBar/SnackBar'
 import { getBNBPrice } from './services/api/utils/bnb'
 
 function App() {
-  const [loading, setLoading] = useState(true)
+  // const [loading, setLoading] = useState(true)
   const dispatch = useAppDispatch()
 
   const location = useLocation()

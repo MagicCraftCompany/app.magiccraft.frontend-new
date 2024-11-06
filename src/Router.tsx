@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import HomePage from '@/pages/HomePage'
 import MarketplacePage from '@/pages/MarketplacePage'
-import PledgingPage from '@/pages/PledgingPage'
+// import PledgingPage from '@/pages/PledgingPage'
 import InventoryPage from '@/pages/InventoryPage'
 import MintingPage from '@/pages/MintingPage'
 import NFTPage from '@/pages/NFTPage'

@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { Dispatch, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import { fetchMintStatus } from './fetchMint'
 
 type StateType = {

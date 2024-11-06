@@ -8,7 +8,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import mintNFT from '@/assets/images/mint-nft.webp'
 import { useRevelation } from '@/hooks/useContract'
 import { cn } from '@/lib/utils'
-import { useDispatch, useSelector } from 'react-redux'
+import {  useSelector } from 'react-redux'
 import { fetchNFTMintAsync } from '@/services/state/nftmint'
 import {
   // E18,
@@ -195,17 +195,17 @@ const E18 = BigNumber.from(10).pow(18)
 
 const MintingPage = () => {
   const magicNFTContract = useRevelation()
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
   const [currentStep, setCurrentStep] = useState<1 | 2>(1)
   const [selectedItemId, setSelectedItemId] = useState<1 | 2 | 3 | 4 | 5>(3)
 
-  const { publicSale, whitelistSale, publicPrice, whiteListPrice } =
-    useSelector((state) => state.nftmint)
+  const { publicPrice, whiteListPrice } =
+    useSelector((state:any) => state.nftmint)
 
   console.log(publicPrice, whiteListPrice)
 
-  const handleSelectItem = (id: number) => {
+  const handleSelectItem = (id: any) => {
     setSelectedItemId(id)
   }
 
@@ -219,7 +219,7 @@ const MintingPage = () => {
 
   console.log({ publicMintPrice, whitelistMintPrice })
 
-  const [nftAvailable, setNftAvailable] = useState(0)
+  const [_nftAvailable, setNftAvailable] = useState(0)
   const [searchParams, setSearchParams] = useSearchParams({
     collection: 'genesis',
   })
