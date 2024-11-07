@@ -168,48 +168,53 @@ const HeroSection = () => {
 
       <div className="mx-auto w-11/12 max-w-screen-xl rounded-4xl pt-8">
         <div className="rounded-4xl bg-gradient-to-b from-primary-200 to-transparent p-px">
-          <div className="flex h-full flex-row items-center justify-between rounded-4xl  bg-[#0f0625] p-8">
-            <div className="space-y-2">
-              <p className="text-lg text-primary-100 opacity-60">
-                Total amount of players
-              </p>
-              <p className="font-serif text-xl text-secondary-100">31,265</p>
-            </div>
-            <div className={dividerClass} />
-
-            <div className="space-y-2">
-              <p className="text-lg text-primary-100 opacity-60">
-                Lobbies created:
-              </p>
-              <p className="font-serif text-xl text-secondary-100">72,892</p>
-            </div>
-
-            <div className={dividerClass} />
-
-            <div className="space-y-2">
+          <div className="h-full space-y-6 rounded-4xl bg-[#0f0625] p-8">
+            <div className="text-center md:hidden md:text-left">
               <p className="text-lg text-primary-100 opacity-60">
                 Total volume
               </p>
-              <p className="font-serif text-xl text-secondary-100">
+              <p className="font-serif text-2xl text-secondary-100">
                 {numberWithCommas(mcrtData?.totalVolume)}
               </p>
             </div>
 
-            <div className={dividerClass} />
+            {/* Stats Grid for mobile and flex for desktop */}
+            <div className="grid grid-cols-2 gap-4 md:flex md:justify-between">
+              <div className="hidden space-y-2 md:block">
+                <p className="text-lg text-primary-100 opacity-60">
+                  Total volume
+                </p>
+                <p className="font-serif text-xl text-secondary-100">
+                  {numberWithCommas(mcrtData?.totalVolume)}
+                </p>
+              </div>
+              <div className="space-y-2">
+                <p className="text-lg text-primary-100 opacity-60">
+                  Total amount of players
+                </p>
+                <p className="font-serif text-xl text-secondary-100">16,000</p>
+              </div>
 
-            <div className="space-y-2">
-              <p className="text-lg text-primary-100 opacity-60">Market cap</p>
-              <p className="font-serif text-xl text-secondary-100">
-                {numberWithCommas(mcrtData?.marketCap)}
-              </p>
-            </div>
-            <div className={dividerClass} />
+              <div className="space-y-2">
+                <p className="text-lg text-primary-100 opacity-60">
+                  Total $MCRT earned
+                </p>
+                <p className="font-serif text-xl text-secondary-100">657,000</p>
+              </div>
 
-            <div className="space-y-2">
-              <p className="text-lg text-primary-100 opacity-60">
-                Total $MCRT holders
-              </p>
-              <p className="font-serif text-xl text-secondary-100">4,792</p>
+              <div className="space-y-2">
+                <p className="text-lg text-primary-100 opacity-60">
+                  Lobbies created
+                </p>
+                <p className="font-serif text-xl text-secondary-100">64,000</p>
+              </div>
+
+              <div className="space-y-2">
+                <p className="text-lg text-primary-100 opacity-60">
+                  Total $MCRT holders
+                </p>
+                <p className="font-serif text-xl text-secondary-100">20,000</p>
+              </div>
             </div>
           </div>
         </div>
@@ -218,8 +223,8 @@ const HeroSection = () => {
   )
 }
 
-const dividerClass =
-  'h-[60px] w-px  bg-gradient-to-b from-transparent via-primary-100 to-transparent'
+// const dividerClass =
+//   'h-[60px] w-px  bg-gradient-to-b from-transparent via-primary-100 to-transparent'
 
 const HomePage = () => {
   const { data: recentlyListedNfts, status: recentlyListedNftStatus } =
@@ -251,10 +256,10 @@ const HomePage = () => {
 
       <div className="space-y-32 pt-60 md:pt-96 lg:pt-40">
         <section className="relative mx-auto mt-0 w-11/12 max-w-screen-xl">
-          <div className="space-y-20">
+          <div className="mt-8 space-y-20 md:mt-0">
             <TypographyH2>THIS WEEK</TypographyH2>
 
-            <div className="grid grid-cols-3 gap-10">
+            <div className="grid gap-10 md:grid-cols-3">
               <div className="relative rounded-[20px] shadow-xl">
                 <div className="absolute -top-8 left-0 right-0 mx-auto grid w-fit place-items-center rounded-4xl bg-tertiary-300 p-[15px]">
                   <img
@@ -369,7 +374,7 @@ const HomePage = () => {
         <section className="relative mx-auto mt-0 w-11/12 max-w-screen-xl">
           <div className="space-y-14">
             <TypographyH2>Recent transactions</TypographyH2>
-            <div className="grid grid-cols-2 gap-2.5">
+            <div className="grid gap-2.5 md:grid-cols-2">
               <div className="space-y-8 rounded-4xl bg-primary-400 p-4">
                 <div className="min-h-[500px] rounded-[20px] bg-primary-300 px-5 py-5">
                   <div className="pb-5">
@@ -509,86 +514,7 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* <section className="relative mx-auto w-11/12 max-w-screen-xl">
-          <div className="space-y-20">
-            <TypographyH2>MagicVerse Games</TypographyH2>
-            <div className="flex flex-col items-center md:flex-row">
-              <div className="w-4/5 md:w-2/5">
-                <div className="grid grid-cols-1 place-items-center gap-2 rounded-t-4xl border-x border-t border-[#3F3F7A] bg-[#11113A] p-10 shadow-lg md:rounded-l-4xl md:rounded-r-none md:border-y md:border-l md:border-r-0 ">
-                  <div className="max-w-10 md:max-w-20">
-                    <img src={mcrtIcon} alt="MCRT" />
-                  </div>
-
-                  <div className="max-w-[350px]">
-                    <img src={magiccraftText} alt="" />
-                  </div>
-                </div>
-              </div>
-              <div className="w-full md:w-3/5">
-                <div className="rounded-4xl bg-gradient-to-b from-primary-200 to-transparent p-px">
-                  <div className="rounded-4xl bg-primary-400">
-                    <div className="bg-black/20 px-12 py-8">
-                      <h3 className="font-serif text-3xl">Features</h3>
-                    </div>
-
-                    <div className="space-y-6 px-12 py-10">
-                      <div>
-                        <p className="text-xl">
-                          Let&apos;s dive into the exciting changes and new
-                          features coming to the MagicCraft game:
-                        </p>
-                      </div>
-
-                      <div className="h-px w-full bg-gradient-to-r from-transparent via-[#C09AFF] to-transparent" />
-
-                      <div className="grid grid-cols-1 gap-x-3 gap-y-6 md:grid-cols-2">
-                        <div className="flex items-center gap-2">
-                          <img src={bulletIcon} alt="List item" />
-                          <p className="text-[22px] text-[#C09AFF]">
-                            <span className="font-bold text-[#ECE0FF]">
-                              Elevated UI/UX:&nbsp;
-                            </span>
-                            Immerse yourself in an enhanced interface for a
-                            seamless gaming experience.
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <img src={bulletIcon} alt="List item" />
-                          <p className="text-[22px] text-[#C09AFF]">
-                            <span className="font-bold text-[#ECE0FF]">
-                              Multiplayer System:&nbsp;
-                            </span>
-                            A 5v5 quick play mode with automated matchmaking is
-                            coming to MagicCraft.
-                          </p>
-                        </div>{' '}
-                        <div className="flex items-center gap-2">
-                          <img src={bulletIcon} alt="List item" />
-                          <p className="text-[22px] text-[#C09AFF]">
-                            <span className="font-bold text-[#ECE0FF]">
-                              Seasonal Progression:&nbsp;
-                            </span>
-                            New league system, daily tasks, and ranked play to
-                            enable progression.
-                          </p>
-                        </div>{' '}
-                        <div className="flex items-center gap-2">
-                          <img src={bulletIcon} alt="List item" />
-                          <p className="text-[22px] text-[#C09AFF]">
-                            <span className="font-bold text-[#ECE0FF]">
-                              Dynamic In-game Market:&nbsp;
-                            </span>
-                            A new in-game store packed with utilities for MCRT.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section> */}
+       
       </div>
     </>
   )
@@ -604,13 +530,14 @@ const RecentlyListedNftItem = (nft: RecentlyListedNft) => {
   const goToNftDetail = () => {
     navigate(`/nft/${nft.contractAddress}/${nft.tokenID}`)
   }
+
   return (
     <React.Fragment>
       <div
         onClick={goToNftDetail}
-        className="grid cursor-pointer grid-cols-recently-listed gap-3"
+        className="grid cursor-pointer grid-cols-2 gap-3 rounded-lg bg-[#16182d] p-4 hover:bg-[#1d1f3d]"
       >
-        <div className=" flex gap-3">
+        <div className="flex gap-3">
           <div>
             {isVideo ? (
               <video
@@ -651,33 +578,31 @@ const RecentlyListedNftItem = (nft: RecentlyListedNft) => {
           </div>
         </div>
 
-        <div className="space-y-1">
-          <p className="text-sm text-tertiary-100 opacity-50">Seller</p>
-
-          <p>
-            {nft.seller.substring(0, 7).concat('..') +
-              nft.seller.substring(nft.seller.length - 3)}
-          </p>
-        </div>
-
-        <div className="space-y-1 ">
-          <p className="text-sm text-tertiary-100 opacity-50">Price</p>
-
-          <div className="flex gap-2">
-            {nft.isMCRT ? (
-              <img className="h-5 w-5" src={mcrtIcon} alt="mcrt-logo" />
-            ) : (
-              <img className="h-5 w-5" src={bnbIcon} alt="bnb-logo" />
-            )}
-            <h2 className="text-white">
-              {numberWithCommas(getCurrentPrice(nft)?.toFixed(0))}
-            </h2>
+        <div className="flex flex-col md:flex-row justify-between">
+          <div className="space-y-1">
+            <p className="text-xs text-tertiary-100 opacity-50">Seller</p>
+            <p className="text-sm text-white">
+              {nft.seller.substring(0, 7).concat('..') +
+                nft.seller.substring(nft.seller.length - 3)}
+            </p>
           </div>
 
-          <p></p>
+          <div className="space-y-1">
+            <p className="text-xs text-tertiary-100 opacity-50">Price</p>
+            <div className="flex items-center gap-2">
+              {nft.isMCRT ? (
+                <img className="h-4 w-4" src={mcrtIcon} alt="mcrt-logo" />
+              ) : (
+                <img className="h-4 w-4" src={bnbIcon} alt="bnb-logo" />
+              )}
+              <p className="text-sm text-white">
+                {numberWithCommas(getCurrentPrice(nft)?.toFixed(0))}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-      <Separator className="via-tertiary-200/40" />
+      <Separator className="my-2 via-tertiary-200/40" />
     </React.Fragment>
   )
 }
@@ -692,13 +617,15 @@ const RecentlySoldNftItem = (nft: RecentlySoldNft) => {
     navigate(`/nft/${nft.contractAddress}/${nft.tokenID}`)
   }
 
+  
   return (
     <React.Fragment>
       <div
         onClick={goToNftDetail}
-        className="grid cursor-pointer grid-cols-recently-sold gap-3"
+        className="cursor-pointer p-4 bg-[#16182d] rounded-lg hover:bg-[#1d1f3d] grid grid-cols-3 gap-4 items-center md:grid-cols-recently-sold" // Three-column grid for mobile
       >
-        <div className="flex gap-3">
+        {/* NFT Image and Details */}
+        <div className="flex gap-3 col-span-3 md:col-span-1">
           <div>
             {isVideo ? (
               <video
@@ -706,13 +633,13 @@ const RecentlySoldNftItem = (nft: RecentlySoldNft) => {
                 muted
                 autoPlay
                 src={getThumbnailImage(nft?.nftItem?.image)}
-                className="h-16 w-16"
+                className="h-16 w-16 rounded-sm"
               />
             ) : (
               <Border
-                className="h-fit w-fit rounded-sm p-1"
-                variant={rarity?.toLowerCase() as Rarity}
-              >
+                              className="h-fit w-fit rounded-sm p-1"
+                              variant={rarity?.toLowerCase() as Rarity}
+                            >
                 <img
                   src={getThumbnailImage(nft?.nftItem?.image)}
                   alt="nft"
@@ -739,42 +666,40 @@ const RecentlySoldNftItem = (nft: RecentlySoldNft) => {
           </div>
         </div>
 
-        <div className="space-y-1 self-start">
-          <p className="text-sm text-tertiary-100 opacity-50">Buyer</p>
-
-          <p>
+        {/* Buyer Section */}
+        <div className="space-y-1 col-span-1">
+          <p className="text-xs text-tertiary-100 opacity-50">Buyer</p>
+          <p className="text-sm text-white">
             {nft.buyer.substring(0, 4).concat('..') +
               nft.buyer.substring(nft.buyer.length - 3)}
           </p>
         </div>
 
-        <div className="space-y-1 self-start">
-          <p className="text-sm text-tertiary-100 opacity-50">Seller</p>
-
-          <p>
+        {/* Seller Section */}
+        <div className="space-y-1 col-span-1">
+          <p className="text-xs text-tertiary-100 opacity-50">Seller</p>
+          <p className="text-sm text-white">
             {nft.seller.substring(0, 4).concat('..') +
               nft.seller.substring(nft.seller.length - 3)}
           </p>
         </div>
 
-        <div className="space-y-1 self-start">
-          <p className="text-sm text-tertiary-100 opacity-50">Price</p>
-
-          <div className="flex gap-2">
+        {/* Price Section */}
+        <div className="space-y-1 col-span-1">
+          <p className="text-xs text-tertiary-100 opacity-50">Price</p>
+          <div className="flex items-center gap-2">
             {nft.isMCRT ? (
-              <img className="h-5 w-5" src={mcrtIcon} alt="mcrt-logo" />
+              <img className="h-4 w-4" src={mcrtIcon} alt="mcrt-logo" />
             ) : (
-              <img className="h-5 w-5" src={bnbIcon} alt="bnb-logo" />
+              <img className="h-4 w-4" src={bnbIcon} alt="bnb-logo" />
             )}
-            <h2 className="text-white">
+            <p className="text-sm text-white">
               {numberWithCommas(showAmount(nft?.price, nft?.isMCRT).toFixed(0))}
-            </h2>
+            </p>
           </div>
-
-          <p></p>
         </div>
       </div>
-      <Separator className="via-tertiary-200/40" />
+      <Separator className="my-2 via-tertiary-200/40" />
     </React.Fragment>
   )
 }
