@@ -220,14 +220,16 @@ const MarketplacePage = () => {
   }
 
   return (
-    <section className="relative px-6">
+    <section className="relative md:px-6 px-2">
       <div className="space-y-12 pt-10">
         <TypographyH1 className="md:text-5xl">Marketplace</TypographyH1>
 
-        <div className="mx-auto flex min-h-10 w-full max-w-screen-2xl justify-between gap-6">
-          <div className="sticky top-10 h-fit w-[25%] rounded-[22px] bg-gradient-to-b from-primary-200 to-transparent p-px shadow-xl">
-            <div className="self-start rounded-[22px] bg-primary-600">
-              <div className="relative top-[2px] z-10 flex items-center justify-center gap-1 px-6 pt-2">
+        <div className="mx-auto flex flex-col gap-6 md:flex-row md:max-w-screen-2xl md:justify-between">
+          <div className="w-full md:sticky top-10 md:h-fit md:w-[25%] rounded-[22px] bg-gradient-to-b from-primary-200 to-transparent p-px shadow-xl">
+
+            <div className=" rounded-[22px] bg-primary-600 ">
+              <div className="flex justify-between md:justify-center gap-1 px-4 pt-2 md:px-6">
+
                 <div
                   onClick={() =>
                     setSearchParams(
@@ -297,8 +299,8 @@ const MarketplacePage = () => {
                   <span className="text-sm">Lands</span>
                 </div>
               </div>
-              <div className="h-[500px] rounded-[20px] border-t border-primary-200 bg-primary-400 px-6 py-[30px]">
-                <p className="pb-5 font-sans text-2xl font-bold tracking-wider text-white">
+              <div className="h-[500px] rounded-[20px] border-t border-primary-200 bg-primary-400 px-4 py-4 md:px-6 md:py-[30px]">
+                <p className="pb-5 text-lg font-sans md:text-2xl font-bold tracking-wider text-white">
                   Filter
                 </p>
                 {currentTab === 'characters' ? (
@@ -590,9 +592,9 @@ const MarketplacePage = () => {
               </div>
             </div>
           </div>
-          <div className="w-[75%] rounded-[22px] bg-gradient-to-b from-primary-200 to-transparent p-px shadow-xl">
-            <div className="min-h-dvh space-y-16 rounded-[22px] bg-primary-600 px-11 py-[22px] ">
-              <div className="flex w-full items-center justify-between">
+          <div className="md:w-[75%]  rounded-[22px] bg-gradient-to-b from-primary-200 to-transparent p-px shadow-xl mt-[5px] md:mt-0">
+            <div className=" space-y-6 rounded-[22px] bg-primary-600  md:px-11 md:py-[22px] ">
+              <div className="flex flex-col md:flex-row  items-center justify-between pt-4 md:pt-0">
                 <p className="text-base text-white/60">
                   Showing{' '}
                   {currentTab === 'characters' ? (
@@ -614,7 +616,7 @@ const MarketplacePage = () => {
                 </p>
 
                 {currentTab === 'characters' && (
-                  <div className="text-secondary-100">
+                  <div className="text-secondary-100 flex items-center">
                     {currentSort === 'desc' || currentSort === '' ? (
                       <div
                         onClick={() => handleSortChange()}
@@ -651,7 +653,7 @@ const MarketplacePage = () => {
                           </p>
                         </div>
                       ) : (
-                        <div className="grid max-w-full grid-cols-4 gap-6 lg:grid-cols-4">
+                        <div className="grid max-w-full grid-cols-2 gap-3 md:gap-6 px-2 md:grid-cols-4">
                           {filteredGenesisNFTs?.map((nft) => (
                             <NFTCard key={nft.tokenID} nft={nft} />
                           ))}
@@ -681,7 +683,7 @@ const MarketplacePage = () => {
                   )}
                 </>
               ) : currentTab === 'items' ? (
-                <div className="grid max-w-full grid-cols-4 gap-6 lg:grid-cols-4">
+                <div className="grid max-w-full lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 ">
                   {GEM_PACK_DATA?.map((item) => (
                     <GemPackCard key={item.id} item={item} />
                   ))}
@@ -720,9 +722,9 @@ function NFTCard({ nft }: { nft: ListedNft }) {
         className="h-fit"
         variant={rarity?.toLowerCase() as Rarity | null | undefined}
       >
-        <div key={nft.tokenID} className="h-full rounded-2xl  p-[2px]">
+        <div key={nft.tokenID} className="h-full rounded-2xl p-[2px]">
           <div className="relative">
-            <div className="w-full">
+            <div className="w-full ">
               {getThumbnailImage(nft.image).includes('mp4') ? (
                 <video
                   height={240}
@@ -812,7 +814,7 @@ function GemPackCard({ item }: { item: GemPack }) {
     itemPrice = itemPriceDollar / mcrtPrice
   }
   return (
-    <Link className="w-[240px]" to={`/item/${item.id}`}>
+    <Link className="md:w-[240px] w-[190px] px-2 " to={`/item/${item.id}`}>
       <Border className="h-fit w-full" variant={'rare'}>
         <div key={item.id} className="h-full w-full rounded-2xl  p-[2px]">
           <div className="relative w-full">
@@ -863,6 +865,7 @@ function GemPackCard({ item }: { item: GemPack }) {
         </div>
       </Border>
     </Link>
+ 
   )
 }
 
