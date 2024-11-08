@@ -224,8 +224,8 @@ const MarketplacePage = () => {
       <div className="space-y-12 pt-10">
         <TypographyH1 className="md:text-5xl">Marketplace</TypographyH1>
 
-        <div className="mx-auto flex flex-col gap-6 md:flex-row md:max-w-screen-2xl md:justify-between">
-          <div className="w-full md:sticky top-10 md:h-fit md:w-[25%] rounded-[22px] bg-gradient-to-b from-primary-200 to-transparent p-px shadow-xl">
+        <div className="mx-auto flex flex-col gap-6 lg:flex-row md:max-w-screen-2xl md:justify-between">
+          <div className="w-full lg:sticky top-10 md:h-fit lg:w-[25%] rounded-[22px] bg-gradient-to-b from-primary-200 to-transparent p-px shadow-xl">
 
             <div className=" rounded-[22px] bg-primary-600 ">
               <div className="flex justify-between md:justify-center gap-1 px-4 pt-2 md:px-6">
@@ -592,7 +592,7 @@ const MarketplacePage = () => {
               </div>
             </div>
           </div>
-          <div className="md:w-[75%]  rounded-[22px] bg-gradient-to-b from-primary-200 to-transparent p-px shadow-xl mt-[5px] md:mt-0">
+          <div className="lg:w-[75%]  rounded-[22px] bg-gradient-to-b from-primary-200 to-transparent p-px shadow-xl mt-[5px] md:mt-0">
             <div className=" space-y-6 rounded-[22px] bg-primary-600  md:px-11 md:py-[22px] ">
               <div className="flex flex-col md:flex-row  items-center justify-between pt-4 md:pt-0">
                 <p className="text-base text-white/60">
@@ -653,7 +653,7 @@ const MarketplacePage = () => {
                           </p>
                         </div>
                       ) : (
-                        <div className="grid max-w-full grid-cols-2 gap-3 md:gap-6 px-2 md:grid-cols-4">
+                        <div className="grid max-w-full grid-cols-2 gap-3 md:gap-6 px-2 lg:grid-cols-4 md:grid-cols-3">
                           {filteredGenesisNFTs?.map((nft) => (
                             <NFTCard key={nft.tokenID} nft={nft} />
                           ))}
