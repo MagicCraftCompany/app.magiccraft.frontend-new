@@ -156,45 +156,45 @@ const NFTPage = () => {
   }
 
   return (
-    <div className="relative z-10 h-full min-h-dvh w-full bg-gradient-to-b from-[#0D021B7A] to-primary-600 pb-20">
-      <div className="mx-auto min-h-dvh w-[95%] max-w-screen-xl">
-        <div className="py-[30px]">
+    <div className="relative z-10 min-h-dvh w-full bg-gradient-to-b from-[#0D021B7A] to-primary-600 pb-6 md:pb-12">
+      <div className="mx-auto min-h-dvh w-full max-w-screen-xl px-4 md:px-6">
+        <div className="py-4 md:py-[30px]">
           <Button
             variant={'ghost'}
             size={'sm'}
             className="gap-1"
             onClick={() => navigate(-1)}
           >
-            <ArrowLeft />
-            <span>Back to all NFTs</span>
+            <ArrowLeft className="h-4 w-4"  />
+            <span className="hidden sm:inline">Back to all NFTs</span>
           </Button>
         </div>
-
-        <div className="flex items-start gap-[30px]">
-          <div className="shadow-xl">
+        
+        < div className="flex flex-col lg:flex-row lg:gap-[30px] ">
+          <div className="mb-6 flex justify-center lg:mb-0">
             {selectedNFT?.image.includes('mp4') ? (
               <video src={selectedNFT?.image} muted autoPlay loop />
             ) : (
               <Border
-                className="h-[400px] w-[400px] p-[3px]"
+                className="h-[300px] w-[300px] md:h-[400px] md:w-[400px] p-[3px]"
                 variant={rarity?.toLowerCase() as Rarity}
               >
                 <img
                   src={selectedNFT?.image}
-                  className="h-full w-full rounded-2xl bg-primary-500"
+                  className="h-full w-full rounded-2xl bg-primary-500 object-cover"
                 />
               </Border>
             )}
           </div>
 
-          <div className="grow space-y-12">
-            <div className="flex items-center gap-[30px]">
+          <div className="flex-1 space-y-6 md:space-y-12 ">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-[30px]">
               <div className="grow">
                 <p className="text-sm text-tertiary-100">Owner</p>
                 <p className="text-sm text-white/60">{selectedNFT?.owner}</p>
               </div>
               <div className="flex items-center gap-2">
-                <div className="grid h-auto w-11 place-items-center">
+                <div className="grid h-8 w-8 md:h-11 md:w-11 place-items-center">
                   {NFTData?.isMCRT ? (
                     <img src={mcrtIcon} />
                   ) : (
@@ -203,7 +203,7 @@ const NFTPage = () => {
                 </div>
 
                 <div>
-                  <p className="text-[24px]">
+                  <p className="text-lg md:text-[24px]">
                     {numberWithCommas(nftPrice?.toString() ?? '')}
                   </p>
                   <p className="text-right text-sm text-tertiary-100">
@@ -212,23 +212,23 @@ const NFTPage = () => {
                 </div>
               </div>
 
-              <Button className="min-h-[60px] gap-[10px]">
-                <Wallet />
-                <p className="text-[22px]">Buy Item</p>
+              <Button className="min-h-[50px] md:min-h-[60px] gap-2 md:gap-[10px] w-full sm:w-auto">
+               <Wallet className="h-5 w-5" />
+                <p className="text-lg md:text-[22px]">Buy Item</p>
               </Button>
             </div>
 
-            <div className="space-y-5 rounded-[20px] bg-primary-400 p-10 shadow-xl shadow-black">
-              <div className="flex items-start justify-between">
+            <div className="space-y-5 rounded-[20px] bg-primary-400 p-4 md:p-10 shadow-xl shadow-black">
+               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div className="space-y-1">
-                  <h3 className="font-serif text-[30px]">
+                  <h3 className="font-serif text-2xl md:text-[30px]">
                     {' '}
                     {selectedNFT?.name.split(',')[0]}
                   </h3>
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex flex-wrap items-center gap-2.5">
                     {selectedNFT?.name && (
                       <div
-                        className="w-fit rounded-md px-2 text-base"
+                        className="w-fit rounded-md px-2 text-sm md:text-base"
                         style={{
                           backgroundColor: getNameBgColor(
                             selectedNFT?.name ?? null
@@ -240,7 +240,7 @@ const NFTPage = () => {
                     )}
 
                     <div
-                      className="w-fit rounded-md px-2 text-base"
+                      className="w-fit rounded-md px-2 text-sm md:text-base"
                       style={{
                         backgroundColor: getRarityBgColor(rarity ?? 'epic'),
                       }}
@@ -258,9 +258,9 @@ const NFTPage = () => {
               <Separator className="via-secondary-100/50" />
 
               <div className="space-y-4">
-                <h5 className="text-2xl text-tertiary-100">Description</h5>
+                <h5 className="text-xl md:text-2xl text-tertiary-100">Description</h5>
 
-                <p className="text-balance text-lg">
+                <p className="text-balance text-base md:text-lg">
                   {selectedNFT?.description}
                 </p>
               </div>
@@ -269,20 +269,20 @@ const NFTPage = () => {
                 <>
                   <Separator className="via-secondary-100/50" />
                   <div className="space-y-4">
-                    <h5 className="text-2xl text-tertiary-100">Abilities</h5>
+                    <h5 className="text-xl md:text-2xl text-tertiary-100">Abilities</h5>
 
-                    <div className="grid grid-cols-2 gap-2.5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                       {attributes.map((attr) => {
                         return (
                           <div
                             key={attr.name}
-                            className="flex items-center gap-4 rounded-2xl bg-[#0C0C29] p-5"
+                             className="flex items-center gap-4 rounded-2xl bg-[#0C0C29] p-4 md:p-5"
                           >
-                            <img src={demoImg} alt="Attribute" />
+                            <img src={demoImg} alt="Attribute" className="w-12 h-12 md:w-16 md:h-16" />
 
                             <div>
-                              <h6 className="text-[22px]">{attr?.name}</h6>
-                              <p className="text-balance text-sm text-white/60">
+                         <h6 className="text-lg md:text-[22px]">{attr.name}</h6>
+                            <p className="text-balance text-sm text-white/60">
                                 {attr?.value}
                               </p>
                             </div>
@@ -295,10 +295,15 @@ const NFTPage = () => {
               )}
             </div>
           </div>
-        </div>
+      
+      </div>
       </div>
     </div>
   )
 }
 
 export default NFTPage
+
+
+
+
