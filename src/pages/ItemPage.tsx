@@ -76,7 +76,7 @@ export default function ItemPage() {
             onClick={() => navigate(-1)}
           >
             <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline">Back to all Items</span>
+            <span className=" sm:inline">Back to all Items</span>
           </Button>
         </div>
 

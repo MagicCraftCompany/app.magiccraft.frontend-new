@@ -166,7 +166,7 @@ const NFTPage = () => {
             onClick={() => navigate(-1)}
           >
             <ArrowLeft className="h-4 w-4"  />
-            <span className="hidden sm:inline">Back to all NFTs</span>
+            <span className=" sm:inline">Back to all NFTs</span>
           </Button>
         </div>
         
