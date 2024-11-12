@@ -256,16 +256,16 @@ const MintingPage = () => {
     <div className="relative z-10 h-full min-h-dvh w-full pb-20">
       <section className="hero-bg-gradient h-full w-full pb-16">
         <div className="mx-auto min-h-dvh w-[95%] max-w-screen-xl space-y-10">
-          <div className="flex items-center justify-between pb-10 pt-20">
-            <div className="w-[45%] space-y-10">
+        <div className="flex flex-col-reverse items-center justify-between gap-8 pb-10 pt-20 md:flex-row md:gap-0">
+              <div className="w-full space-y-10 text-center md:w-[45%] md:text-left">
               <div className="space-y-6">
-                <TypographyH1 className="text-left">Mint NFT</TypographyH1>
+                <TypographyH1 className="text-4xl font-bold text-white md:text-5xl lg:text-left">Mint NFT</TypographyH1>
 
-                <h2 className="text-3xl text-white">
+                <h2 className="text-2xl text-white md:text-3xl">
                   There&apos;s no second chance to gain unique warriors
                 </h2>
 
-                <div className="flex flex-wrap items-center gap-2.5">
+                <div className="flex flex-wrap items-center justify-center gap-2.5 md:justify-start">
                   {[
                     '#Metaverse',
                     '#MagicCraftGame',
@@ -275,51 +275,48 @@ const MintingPage = () => {
                     '#RevelationCollection',
                     '#RarityLevels',
                   ].map((val) => (
-                    <Badge key={val} variant="mint" className="text-base">
+                    <Badge key={val} variant="mint" className="rounded-full bg-primary/10 px-3 py-1 text-sm text-primary md:text-base">
                       {val}
                     </Badge>
                   ))}
                 </div>
               </div>
-              <div className="flex h-full items-center gap-[30px]">
+              <div className="flex flex-col items-center gap-6 md:flex-row md:gap-[30px]">
                 {/* <Button variant={'outline'}>Marketplace</Button> */}
 
                 <Button
                   size={'lg'}
-                  className="text-[22px]"
+                 className="w-full md:w-auto"
                   variant={'outline'}
                   asChild
                 >
                   <Link to="/marketplace">Marketplace</Link>
                 </Button>
 
-                <Separator
-                  className="h-[60px] via-secondary-100/50"
-                  orientation="vertical"
-                />
+                <Separator className="hidden h-[60px] md:block" orientation="vertical"/>
 
-                <div className="flex items-center gap-4">
+                <div className="flex w-full justify-center gap-8 md:w-auto md:gap-4">
                   <div className="grid place-items-center gap-1">
-                    <Play size={18} />
-                    <p>Play trailer</p>
+                  <Play className="h-5 w-5" />                    
+                  <p className="text-sm">Play trailer</p>
                   </div>
                   <div className="grid place-items-center gap-1">
-                    <HelpCircle size={18} />
-                    <p>How to buy?</p>
+                    <HelpCircle className="h-5 w-5" />
+                    <p className="text-sm">How to buy?</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="relative w-1/2">
-              <div className="absolute -right-16 -top-10 space-y-1 rounded-[20px] bg-[#0C021899] px-10 py-7 backdrop-blur">
-                <p className="text-2xl text-white">Available amount:</p>
-                <div className="font-serif text-2xl">
-                  <span className="text-4xl">9898</span> / 9999 NFTs
+            <div className="relative w-full lg:w-1/2">
+              <div className="absolute -right-1 -top-10  space-y-1 rounded-[20px] bg-[#0C021899] px-6 py-4 backdrop-blur lg:-right-6  xl:-right-20 lg:px-10 lg:py-7 ">
+                <p  className="text-lg text-white lg:text-2xl">Available amount:</p>
+                <div className="font-serif text-xl lg:text-2xl">
+                  <span className="text-2xl lg:text-3xl">9898</span> / 9999 NFTs
                 </div>
               </div>
 
-              <img className="max-w-[620px]" src={mintNFT} alt="Mint NFT"></img>
+              <img className="mx-auto max-w-full xl:max-w-[620px]" src={mintNFT} alt="Mint NFT"></img>
             </div>
           </div>
 
@@ -327,6 +324,8 @@ const MintingPage = () => {
             <div className="space-y-2">
               {currentStep === 1 ? (
                 <>
+              {/* <h2 className="text-center text-3xl font-bold">Step 1</h2> */}
+
                   <TypographyH2>Step 1</TypographyH2>
                   <p className="text-center font-inter text-lg font-semibold text-[#76779A]">
                     Choose a{' '}
@@ -404,7 +403,7 @@ const MintingPage = () => {
               {currentStep === 1 ? (
                 <>
                   {currentCollection === 'revelation' ? (
-                    <div className="grid grid-cols-9 gap-2.5 pb-4">
+                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-6 lg:grid-cols-9">
                       {revelationCollection.map((character) => (
                         <img
                           key={character.name}
@@ -414,11 +413,11 @@ const MintingPage = () => {
                       ))}
                     </div>
                   ) : (
-                    <div className="flex items-center justify-center gap-2.5 pb-4">
+                    <div className="flex items-center justify-center gap-2.5 pb-4 ">
                       {genesisCollection?.map((character) => (
                         <img
                           key={character.name}
-                          className="h-auto w-[125px]"
+                          className="h-auto md:w-[125px] w-[100px]"
                           src={character.image}
                         />
                       ))}
@@ -490,7 +489,7 @@ const MintingPage = () => {
                       ))}
                     </div>
                   ) : currentCollection === 'genesis' ? (
-                    <div className="grid grid-cols-5 place-items-center gap-[30px] pt-10">
+                    <div className="grid grid-cols-1 xl:grid-cols-5 md:grid-cols-3 lg:grid-cols-4 place-items-center  xl:gap-[30px] gap-[90px] pt-10 px-5">
                       {genesisData.map((item) => (
                         <div
                           className={cn(
@@ -513,7 +512,7 @@ const MintingPage = () => {
                           >
                             <img
                               className={cn('', {
-                                'w-[120px] shadow-lg drop-shadow':
+                                'w-[120px] shadow-lg drop-shadow ':
                                   item.id === 1,
                               })}
                               src={item.image}
@@ -577,9 +576,9 @@ const MintingPage = () => {
         <TypographyH2 className="text-[54px]">
           Benefits of Holding an NFT
         </TypographyH2>
-        <div className="flex flex-col items-center md:flex-row">
-          <div className="w-4/5 md:w-2/5">
-            <div className="grid grid-cols-1  gap-2 rounded-t-4xl border-x border-t border-primary-200 bg-primary-400 p-10 shadow-lg md:rounded-l-4xl md:rounded-r-none md:border-y md:border-l md:border-r-0 ">
+        <div className="flex flex-col items-center lg:flex-row">
+          <div className="w-full lg:w-2/5 mb-4 lg:mb-0 ">
+            <div className="grid grid-cols-1  gap-2 rounded-4xl border-x border-t border-primary-200 bg-primary-400 p-10 shadow-lg lg:rounded-l-4xl lg:rounded-r-none lg:border-y lg:border-l lg:border-r-0 ">
               <TypographyH2 className="text-left text-[30px]">
                 Rarity levels
               </TypographyH2>
@@ -589,10 +588,10 @@ const MintingPage = () => {
               </div>
             </div>
           </div>
-          <div className="w-full md:w-3/5">
+          <div className="w-full lg:w-3/5">
             <div className="rounded-4xl bg-gradient-to-b from-[#B591F2] to-transparent p-px">
               <div className="rounded-4xl bg-gradient-to-r  from-[#2A0D4E] to-[#57186D] to-90%">
-                <div className="bg-black/20 px-12 py-8">
+                <div className="lg:bg-black/20 px-12 py-8">
                   <h3 className="font-serif text-3xl">Features</h3>
                 </div>
 
@@ -645,7 +644,7 @@ const MintingPage = () => {
                 className="flex items-center gap-3 whitespace-nowrap rounded-4xl bg-tertiary-300/30 px-5 py-2 backdrop-blur-md"
               >
                 <img className="shrink-0 " src={bulletIcon} alt="List item " />
-                <p className="text-lg md:text-[22px]">{val}</p>
+                <p className="text-sm sm:text-lg md:text-[22px]">{val}</p>
               </div>
             ))}
           </div>
@@ -688,5 +687,6 @@ const MintingPage = () => {
     </div>
   )
 }
+
 
 export default MintingPage
