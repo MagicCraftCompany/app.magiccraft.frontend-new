@@ -374,7 +374,7 @@ const HomePage = () => {
         <section className="relative mx-auto mt-0 w-11/12 max-w-screen-xl">
           <div className="space-y-14">
             <TypographyH2>Recent transactions</TypographyH2>
-            <div className="grid gap-2.5 md:grid-cols-2">
+            <div className="grid gap-2.5 lg:grid-cols-2">
               <div className="space-y-8 rounded-4xl bg-primary-400 p-4">
                 <div className="min-h-[500px] rounded-[20px] bg-primary-300 px-5 py-5">
                   <div className="pb-5">
@@ -578,7 +578,7 @@ const RecentlyListedNftItem = (nft: RecentlyListedNft) => {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between">
+        <div className="flex flex-col xl:flex-row justify-between">
           <div className="space-y-1">
             <p className="text-xs text-tertiary-100 opacity-50">Seller</p>
             <p className="text-sm text-white">
@@ -622,10 +622,10 @@ const RecentlySoldNftItem = (nft: RecentlySoldNft) => {
     <React.Fragment>
       <div
         onClick={goToNftDetail}
-        className="cursor-pointer p-4 bg-[#16182d] rounded-lg hover:bg-[#1d1f3d] grid grid-cols-3 gap-4 items-center md:grid-cols-recently-sold" // Three-column grid for mobile
+        className="cursor-pointer p-4 bg-[#16182d] rounded-lg hover:bg-[#1d1f3d] grid grid-cols-3 lg:gap-0  xl:gap-4 items-center lg:grid-cols-recently-sold " // Three-column grid for mobile
       >
         {/* NFT Image and Details */}
-        <div className="flex gap-3 col-span-3 md:col-span-1">
+        <div className="flex gap-3  ">
           <div>
             {isVideo ? (
               <video
@@ -637,8 +637,8 @@ const RecentlySoldNftItem = (nft: RecentlySoldNft) => {
               />
             ) : (
               <Border
-                              className="h-fit w-fit rounded-sm p-1"
-                              variant={rarity?.toLowerCase() as Rarity}
+                className="h-fit w-fit rounded-sm p-1"
+                variant={rarity?.toLowerCase() as Rarity}
                             >
                 <img
                   src={getThumbnailImage(nft?.nftItem?.image)}
@@ -667,6 +667,7 @@ const RecentlySoldNftItem = (nft: RecentlySoldNft) => {
         </div>
 
         {/* Buyer Section */}
+        <div className='flex flex-col  gap-4 '>
         <div className="space-y-1 col-span-1">
           <p className="text-xs text-tertiary-100 opacity-50">Buyer</p>
           <p className="text-sm text-white">
@@ -682,6 +683,7 @@ const RecentlySoldNftItem = (nft: RecentlySoldNft) => {
             {nft.seller.substring(0, 4).concat('..') +
               nft.seller.substring(nft.seller.length - 3)}
           </p>
+        </div>
         </div>
 
         {/* Price Section */}
