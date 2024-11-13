@@ -437,7 +437,7 @@ const MintingPage = () => {
               ) : currentStep === 2 ? (
                 <>
                   {currentCollection === 'revelation' ? (
-                    <div className="grid grid-cols-5 place-items-center gap-[30px] pt-10">
+                    <div className="grid xl:grid-cols-5 md:grid-cols-2 lg:grid-cols-3 place-items-center xl:gap-[30px] gap-[50px] pt-10 ">
                       {revelationData.map((item) => (
                         <div
                           className={cn(

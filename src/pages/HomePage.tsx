@@ -622,7 +622,7 @@ const RecentlySoldNftItem = (nft: RecentlySoldNft) => {
     <React.Fragment>
       <div
         onClick={goToNftDetail}
-        className="cursor-pointer p-4 bg-[#16182d] rounded-lg hover:bg-[#1d1f3d] grid grid-cols-3 lg:gap-0  xl:gap-4 items-center lg:grid-cols-recently-sold " // Three-column grid for mobile
+        className="cursor-pointer p-4 bg-[#16182d] rounded-lg hover:bg-[#1d1f3d] grid md:grid-cols-3 lg:gap-0  xl:gap-4 items-center lg:grid-cols-recently-sold  " // Three-column grid for mobile
       >
         {/* NFT Image and Details */}
         <div className="flex gap-3  ">
@@ -667,7 +667,7 @@ const RecentlySoldNftItem = (nft: RecentlySoldNft) => {
         </div>
 
         {/* Buyer Section */}
-        <div className='flex flex-col  gap-4 '>
+        <div className='flex md:flex-col  gap-4 ml-10 mt-4 md:mt-0 '>
         <div className="space-y-1 col-span-1">
           <p className="text-xs text-tertiary-100 opacity-50">Buyer</p>
           <p className="text-sm text-white">
@@ -687,7 +687,7 @@ const RecentlySoldNftItem = (nft: RecentlySoldNft) => {
         </div>
 
         {/* Price Section */}
-        <div className="space-y-1 col-span-1">
+        <div className="space-y-1 col-span-1 ml-10 ">
           <p className="text-xs text-tertiary-100 opacity-50">Price</p>
           <div className="flex items-center gap-2">
             {nft.isMCRT ? (

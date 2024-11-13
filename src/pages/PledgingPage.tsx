@@ -1,4 +1,11 @@
-import { ArrowUpLeft, Calculator, Info } from 'lucide-react'
+import {
+  ArrowUpLeft,
+  Calculator,
+  Calendar,
+  ImageIcon,
+  Info,
+  Link2,
+} from 'lucide-react'
 import { useState, ReactNode } from 'react'
 
 const stakingPeriods = [
@@ -67,7 +74,7 @@ export default function Component() {
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full appearance-none rounded-md border border-[#2E2B8C] bg-[#14124F] px-4 py-2 text-white"
+        className="w-full appearance-none rounded-md border-[1px] border-solid border-[#202660] bg-[#161846] px-4 py-2 text-white"
       >
         <option value="" disabled hidden>
           {placeholder}
@@ -127,12 +134,12 @@ export default function Component() {
             <h1 className="font-serif text-4xl font-bold text-white md:text-5xl">
               MCRT PLEDGING
             </h1>
-            <h2 className="text-2xl text-white md:text-[30px]">
+            <h2 className="text-2xl text-white md:text-[30px] bg-[#351056] rounded-4xl w-fit border border-solid border-[#B490F1] p-4">
               TVL: 661,639,136 MCRT
             </h2>
           </div>
 
-          <div className="absolute right-2  space-y-1 rounded-[20px] bg-[#0C021899] px-6 py-4 backdrop-blur  lg:px-10 lg:py-7 ">
+          <div className="absolute lg:right-2 top-[18em] lg:top-0 space-y-1 rounded-[20px] bg-[#0C021899] px-6 py-4 backdrop-blur  lg:px-10 lg:py-7 ">
             <div className="flex flex-col items-center gap-2">
               <span className="text-lg text-white lg:text-2xl">
                 Available amount:
@@ -144,102 +151,121 @@ export default function Component() {
 
         <div className="mt-[10em] grid gap-6 md:grid-cols-2">
           <Card className="space-y-6 rounded-xl border border-[#2E2B8C] bg-[#14124F] p-6">
-            <div className="">
-              <div className=" space-y-6">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-white">
-                      Choose Your Staking Rewards:
-                    </h3>
-                    <div className="flex  flex-col gap-2 mt-10">
-                      <span className="text-sm text-white">
-                        Staked MCRT:
-                      </span>
-                      <span className="text-sm text-white font-serif">305 $MCRT</span>
-                      <span className="text-xs text-[#56E39F]">From Staking started:-54.56%</span>
-                    </div>
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold text-white">
+                    Choose Your Staking Rewards:
+                  </h3>
+                  <div className="mt-10  flex flex-col gap-2">
+                    <span className="text-sm text-white">Staked MCRT:</span>
+                    <span className="font-serif text-sm text-white">
+                      305 $MCRT
+                    </span>
+                    <span className="text-xs text-[#56E39F]">
+                      From Staking started:-54.56%
+                    </span>
                   </div>
+                </div>
+                <div className="-mt-10 flex w-fit items-center gap-2 rounded-full bg-[#03082F] p-1">
+                  <button
+                    onClick={() => setSelectedToken('mcrt')}
+                    className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ${
+                      selectedToken === 'mcrt'
+                        ? 'bg-[#98FFF9] text-[#03082F]'
+                        : 'bg-transparent text-[#98FFF9]'
+                    }`}
+                  >
+                    <Link2 className="h-4 w-4" />
+                    MCRT Token
+                  </button>
 
-                  <div className="flex items-center gap-2 -mt-10">
-                    <Button
-                      variant={selectedToken === 'mcrt' ? 'default' : 'outline'}
-                      size="sm"
+                  <button
+                    onClick={() => setSelectedToken('nft')}
+                    className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ${
+                      selectedToken === 'nft'
+                        ? 'bg-[#98FFF9] text-[#03082F]'
+                        : 'bg-transparent text-[#98FFF9]'
+                    }`}
+                  >
+                    <ImageIcon className="h-4 w-4" />
+                    NFT
+                  </button>
+                </div>
+
+                {/*} <div className="-mt-10 flex items-center gap-2">
+                    <button
+                     
+                     
                       onClick={() => setSelectedToken('mcrt')}
-                      className={`${
+                      className={`flex items-center gap-2 ${
                         selectedToken === 'mcrt'
-                          ? 'border border-[#98FFF9] bg-[#14124F] text-[#98FFF9]'
-                          : 'border border-[#2E2B8C] bg-transparent text-white'
+                          ? 'border-[#98FFF9] bg-[#14124F] text-[#98FFF9]'
+                          : 'border-[#2E2B8C] bg-transparent text-white hover:bg-[#1B184B]'
                       }`}
                     >
+                      <Link2 className="h-4 w-4" />
                       MCRT Token
-                    </Button>
-                    <Button
-                      variant={selectedToken === 'nft' ? 'default' : 'outline'}
-                      size="sm"
+                    </button>
+                    <button
+                     
                       onClick={() => setSelectedToken('nft')}
-                      className={`${
+                      className={`flex items-center gap-2 ${
                         selectedToken === 'nft'
-                          ? 'border border-[#98FFF9] bg-[#14124F] text-[#98FFF9]'
-                          : 'border border-[#2E2B8C] bg-transparent text-white'
+                          ? 'border-[#98FFF9] bg-[#14124F] text-[#98FFF9]'
+                          : 'border-[#2E2B8C] bg-transparent text-white hover:bg-[#1B184B]'
                       }`}
                     >
+                      <ImageIcon className="h-4 w-4" />
                       NFT
-                    </Button>
-                  
-                  </div>
-                </div>
+                    </button>
+                  </div>*/}
+              </div>
 
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-white">
-                      Token Amount
-                    </label>
-                    <div className="flex items-center gap-2 rounded-lg bg-[#1B184B] p-3">
-                      <Input
-                        type="number"
-                        placeholder="0"
-                        value={amount}
-                        onChange={setAmount}
-                        className="border-none bg-[#14124F] bg-transparent text-white focus:ring-0"
-                      />
-                      <button className="font-semibold text-[#98FFF9]">
-                        Max
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-white">
-                      Staking Period
-                    </label>
-                    <Select
-                      options={stakingPeriods.map((period) => ({
-                        value: period.days.toString(),
-                        label: period.label,
-                      }))}
-                      value={stakingPeriod}
-                      onChange={setStakingPeriod}
-                      placeholder="Select period"
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-white">
+                    Token Amount
+                  </label>
+                  <div className="flex items-center gap-2 rounded-lg border border-solid border-[#202660] bg-[#161846] p-3">
+                    <Input
+                      type="number"
+                      placeholder="0"
+                      value={amount}
+                      onChange={setAmount}
+                      className="border-none  bg-transparent text-white focus:ring-0"
                     />
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 rounded-xl bg-[#1F1047]  p-3">
-                      <label className="text-sm font-medium text-white">
-                        Stake until: 21 Dec
-                      </label>
-                      {/* <Input
-                        type="date"
-                        placeholder=""
-                        value=""
-                        onChange={() => {}}
-                        className="bg-[#14124F]"
-                      /> */}
-                    </div>
+                    <button className="font-semibold text-[#98FFF9]">
+                      Max
+                    </button>
                   </div>
                 </div>
 
-                <div className="flex gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-white">
+                    Pledging Period
+                  </label>
+                  <Select
+                    options={stakingPeriods.map((period) => ({
+                      value: period.days.toString(),
+                      label: period.label,
+                    }))}
+                    value={stakingPeriod}
+                    onChange={setStakingPeriod}
+                    placeholder="Stake (lock) for 30 days"
+                  />
+                </div>
+
+                <div className="flex w-fit items-center gap-2 rounded-4xl bg-[#201147] p-3 ">
+                  <span className="flex flex-row text-sm font-medium text-white   ">
+                    Stake until:{' '}
+                    <Calendar className="mx-2 h-4 w-4 text-[#C09AFF]" /> 21 Dec
+                    2023 19:15:13
+                  </span>
+                </div>
+              </div>
+
+              {/* <div className="flex gap-4">
                   <Button className="flex-1 rounded-lg bg-[#98FFF9] py-3 font-semibold text-[#03082F]">
                     Stake
                   </Button>
@@ -250,7 +276,43 @@ export default function Component() {
                     Claim Token Rewards
                   </Button>
                 </div>
+              </div> */}
+              {/* </div> */}
+              <div className="flex flex-col gap-4 sm:flex-row">
+                <Button className="flex-1 bg-[#98FFF9] font-semibold text-[#03082F] hover:bg-[#98FFF9]/90">
+                  {selectedToken === 'mcrt' ? 'Pledge' : 'Pledge NFT'}
+                </Button>
+                {selectedToken === 'mcrt' ? (
+                  <Button
+                    variant="outline"
+                    className="flex-1 border-[#98FFF9] text-[#98FFF9] hover:bg-[#98FFF9]/10"
+                  >
+                    Claim Token Rewards
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      variant="outline"
+                      className="flex-1 border-[#98FFF9] text-[#98FFF9] hover:bg-[#98FFF9]/10"
+                    >
+                      Claim NFT Rewards
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="flex-1 border-[#98FFF9] text-[#98FFF9] hover:bg-[#98FFF9]/10"
+                    >
+                      Redeem NFT
+                    </Button>
+                  </>
+                )}
               </div>
+
+              {selectedToken === 'nft' && (
+                <div className="flex items-center gap-2 text-sm text-[#FF4D4D]">
+                  <span className="text-xl">⚠</span>
+                  Having troubles pledging or unpledging?
+                </div>
+              )}
             </div>
           </Card>
 
