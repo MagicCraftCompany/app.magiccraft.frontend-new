@@ -1,3 +1,4 @@
+import ROICalculator from '@/components/RoiCalculator/RoiCalculator'
 import {
   ArrowUpLeft,
   Calculator,
@@ -26,7 +27,9 @@ export default function Component() {
   const [selectedToken, setSelectedToken] = useState('mcrt')
   const [amount, setAmount] = useState('')
   const [stakingPeriod, setStakingPeriod] = useState('')
-  const [showTooltip, setShowTooltip] = useState(false)
+  const [showTooltip, ] = useState(false)
+  const [showROICalculator, setShowROICalculator] = useState(false)
+
 
   const Button = ({
     children,
@@ -193,33 +196,7 @@ export default function Component() {
                   </button>
                 </div>
 
-                {/*} <div className="-mt-10 flex items-center gap-2">
-                    <button
-                     
-                     
-                      onClick={() => setSelectedToken('mcrt')}
-                      className={`flex items-center gap-2 ${
-                        selectedToken === 'mcrt'
-                          ? 'border-[#98FFF9] bg-[#14124F] text-[#98FFF9]'
-                          : 'border-[#2E2B8C] bg-transparent text-white hover:bg-[#1B184B]'
-                      }`}
-                    >
-                      <Link2 className="h-4 w-4" />
-                      MCRT Token
-                    </button>
-                    <button
-                     
-                      onClick={() => setSelectedToken('nft')}
-                      className={`flex items-center gap-2 ${
-                        selectedToken === 'nft'
-                          ? 'border-[#98FFF9] bg-[#14124F] text-[#98FFF9]'
-                          : 'border-[#2E2B8C] bg-transparent text-white hover:bg-[#1B184B]'
-                      }`}
-                    >
-                      <ImageIcon className="h-4 w-4" />
-                      NFT
-                    </button>
-                  </div>*/}
+              
               </div>
 
               <div className="space-y-4">
@@ -265,19 +242,7 @@ export default function Component() {
                 </div>
               </div>
 
-              {/* <div className="flex gap-4">
-                  <Button className="flex-1 rounded-lg bg-[#98FFF9] py-3 font-semibold text-[#03082F]">
-                    Stake
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="flex-1 rounded-lg border border-[#98FFF9] py-3 font-semibold text-[#98FFF9]"
-                  >
-                    Claim Token Rewards
-                  </Button>
-                </div>
-              </div> */}
-              {/* </div> */}
+             
               <div className="flex flex-col gap-4 sm:flex-row">
                 <Button className="flex-1 bg-[#98FFF9] font-semibold text-[#03082F] hover:bg-[#98FFF9]/90">
                   {selectedToken === 'mcrt' ? 'Pledge' : 'Pledge NFT'}
@@ -325,7 +290,7 @@ export default function Component() {
                 <div className="relative ">
                   <Button
                     size="sm"
-                    onClick={() => setShowTooltip(!showTooltip)}
+                    onClick={() => setShowROICalculator(true)}
                     className="m-4 flex flex-row text-[#98FFF9] "
                   >
                     <Calculator className="mr-2 h-4 w-4 text-[#98FFF9]" />
@@ -394,6 +359,8 @@ export default function Component() {
           </div>
         </div>
       </div>
+      <ROICalculator isOpen={showROICalculator} onClose={() => setShowROICalculator(false)} />
+
     </div>
   )
 }
