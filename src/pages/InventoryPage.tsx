@@ -240,6 +240,134 @@ export default function InventoryPage() {
     </div>
   )
 }
+// import { useState, useCallback, useEffect } from 'react'
+// import { useQuery } from '@tanstack/react-query'
+// import { TypographyH1 } from '@/components/Typography'
+// import { useNavigate, useSearchParams } from 'react-router-dom'
+// import { Separator } from '@/components/ui/separator'
+// import { Badge } from '@/components/ui/badge'
+// import { Border } from '@/components/ui/border'
+// import { ArrowDown, ArrowUp } from 'lucide-react'
+// import { GiBloodySword, GiBroadheadArrow, GiMagicSwirl } from 'react-icons/gi'
+// import { fetchMagicNfts } from '@/services/api/utils/magicNFT'
+// import { useAppSelector } from '@/services/state/store'
+// import charactersTabIcon from '@/assets/images/characters-tab-icon.png'
+// import itemsTabIcon from '@/assets/images/items-tab-icon.png'
+// import landsTabIcon from '@/assets/images/lands-tab-icon.png'
+// import rareNftIcon from '@/assets/images/rare-nft-icon.png'
+// import epicNftIcon from '@/assets/images/epic-nft-icon.png'
+// import legendaryNftIcon from '@/assets/images/legendary-nft-icon.png'
+// import { ListedNft } from './MarketplacePage' // Assuming you have access to this type
+// import { VITE_GENESIS_CONTRACT_ADDRESS, VITE_REVELATION_CONTRACT_ADDRESS } from '@/lib/constants'
+// import { getCurrentPrice } from '@/lib/helpers'
+
+// type Tab = 'characters' | 'items' | 'lands'
+// type Rarity = 'rare' | 'epic' | 'legendary'
+// type Collection = 'genesis' | 'revelation'
+
+// export default function InventoryPage() {
+//   const navigate = useNavigate()
+//   const mcrtPrice = useAppSelector((state) => state.mcrtPrice.mcrtPrice)
+//   const bnbPrice = useAppSelector((state) => state.bnbPrice.bnbPrice)
+//   const [searchParams] = useSearchParams({
+//     collection: 'genesis',
+//     sort: 'desc',
+//     tab: 'characters',
+//   })
+
+//   const currentCollection = searchParams.get('collection')
+//   const currentSort = searchParams.get('sort')
+//   const currentTab = searchParams.get('tab')
+//   const [rarity, setRarity] = useState<Rarity[]>(['rare', 'epic', 'legendary'])
+
+//   // Fetch Genesis NFTs
+//   const { data: genesisNfts } = useQuery<ListedNft[]>({
+//     queryKey: ['genesisNFTs'],
+//     queryFn: async () => {
+//       const data = await fetchMagicNfts(0, VITE_GENESIS_CONTRACT_ADDRESS, undefined, true)
+//       return data.listedNfts.length > 0 ? data.listedNfts : []
+//     },
+//   })
+
+//   // Fetch Revelation NFTs
+//   const { data: revelationNFTs } = useQuery<ListedNft[]>({
+//     queryKey: ['revelationNFTs'],
+//     queryFn: async () => {
+//       const data = await fetchMagicNfts(0, VITE_REVELATION_CONTRACT_ADDRESS, undefined, true)
+//       return data.listedNfts.length > 0 ? data.listedNfts : []
+//     },
+//   })
+
+//   // Filter and sort NFTs based on current collection and rarity
+//   const filteredNFTs = (currentCollection === 'genesis' ? genesisNfts : revelationNFTs)?.filter(nft =>
+//     rarity.includes(nft.attributes.find(attr => attr.trait_type === 'rarity')?.value.toLowerCase() as Rarity)
+//   ) || []
+
+//   const sortedNFTs = [...filteredNFTs].sort((a, b) => 
+//     currentSort === 'desc' ? getCurrentPrice(b) - getCurrentPrice(a) : getCurrentPrice(a) - getCurrentPrice(b)
+//   )
+
+//   // Function to toggle rarity filter
+//   const toggleRarity = (type: Rarity) => {
+//     setRarity(prev => prev.includes(type) ? prev.filter(r => r !== type) : [...prev, type])
+//   }
+
+//   // Function to handle sorting change
+//   const handleSortChange = () => {
+//     navigate(`?${createQueryString('sort', currentSort === 'desc' ? 'asc' : 'desc')}`)
+//   }
+
+//   // Create query string helper function
+//   const createQueryString = useCallback(
+//     (name: string, value: string) => {
+//       const params = new URLSearchParams(searchParams.toString())
+//       params.set(name, value)
+//       return params.toString()
+//     },
+//     [searchParams]
+//   )
+
+//   return (
+//     <div className="space-y-12 pt-10 px-4 md:px-6">
+//       <TypographyH1 className="md:text-5xl">Inventory</TypographyH1>
+//       <div className="mx-auto flex flex-col gap-6 lg:flex-row md:max-w-screen-2xl md:justify-between">
+//         {/* Filters Sidebar */}
+//         <div className="w-full lg:w-1/4 lg:h-fit rounded-[22px] bg-gradient-to-b from-primary-200 to-transparent p-px shadow-xl z-10">
+//           <div className="rounded-[22px] bg-primary-600">
+//             <div className="h-[500px] rounded-[20px] border-t border-primary-200 bg-primary-400 px-4 py-4 md:px-6 md:py-[30px]">
+//               <p className="pb-5 font-sans text-lg font-bold tracking-wider text-white md:text-2xl">Filter</p>
+//               <CharacterFilters
+//                 currentCollection={currentCollection as Collection}
+//                 toggleRarity={toggleRarity}
+//                 rarity={rarity}
+//                 setSearchParams={(name: string, value: string) => navigate(`?${createQueryString(name, value)}`)}
+//               />
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* NFT Display Area */}
+//         <div className="flex-1 rounded-[22px] bg-gradient-to-b from-primary-200 to-transparent p-px shadow-xl">
+//           <div className="space-y-6 rounded-[22px] bg-primary-600 md:px-11 md:py-[22px] min-h-[600px]">
+//             <div className="flex justify-between items-center">
+//               <p className="text-base text-white/60">Showing {sortedNFTs.length} items</p>
+//               <div className="text-secondary-100 flex items-center cursor-pointer" onClick={handleSortChange}>
+//                 <p className="font-semibold">{currentSort === 'desc' ? 'Highest' : 'Lowest'} Price First</p>
+//                 {currentSort === 'desc' ? <ArrowDown size={19} /> : <ArrowUp size={19} />}
+//               </div>
+//             </div>
+//             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+//               {sortedNFTs.map(nft => (
+//                 <NFTCard key={nft.tokenID} nft={nft} />
+//               ))}
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
+
 
 interface CharacterFiltersProps {
   currentCollection: Collection
@@ -477,3 +605,6 @@ function ItemCard({ item }: ItemCardProps) {
     </Border>
   )
 }
+
+
+

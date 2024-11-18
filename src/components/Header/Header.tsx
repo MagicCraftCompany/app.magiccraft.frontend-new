@@ -7,6 +7,8 @@ import NavMenuMobile from './NavMenuMobile'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Button } from '../ui/button'
+import { ethers } from 'ethers' // Import ethers
+
 
 export type NavMenuItemProps = {
   path?: string
@@ -141,8 +143,28 @@ const commonMenuItemsNew: NavMenuItemProps[] = [
   },
 ]
 
+
+
+
+
 const Header = () => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
+  const [walletAddress, setWalletAddress] = useState<string | null>(null)
+
+  // Function to connect the wallet
+  async function connectWallet() {
+    if (typeof (window as any).ethereum !== 'undefined') {
+      try {
+        const provider = new ethers.providers.Web3Provider((window as any).ethereum)
+        const accounts = await provider.send('eth_requestAccounts', [])
+        setWalletAddress(accounts[0]) // Set the connected wallet address
+      } catch (error) {
+        console.error('Failed to connect wallet:', error)
+      }
+    } else {
+      alert('Please install MetaMask to connect your wallet.')
+    }
+  }
 
   function closeSidebar() {
     setIsSideMenuOpen(false)
@@ -150,17 +172,17 @@ const Header = () => {
   }
 
   function openSidebar() {
-    setIsSideMenuOpen(true)
-    if (typeof window != 'undefined' && window.document) {
-      document.body.style.overflow = 'hidden'
-    }
-  }
+        setIsSideMenuOpen(true)
+        if (typeof window != 'undefined' && window.document) {
+          document.body.style.overflow = 'hidden'
+        }
+      }
 
   return (
     <>
-      <header className="relative z-50 w-full bg-transparent px-3 py-4  md:p-4">
+      <header className="relative z-50 w-full bg-transparent px-3 py-4 md:p-4">
         <nav className="flex items-center justify-between gap-4 rounded-xl bg-tertiary-300/70 backdrop-blur-xl md:gap-12">
-          <div className="grid shrink-0 place-items-center self-stretch  bg-black/20 px-4 md:px-8 ">
+          <div className="grid shrink-0 place-items-center self-stretch bg-black/20 px-4 md:px-8">
             <Link to="/" rel="noreferrer noopener">
               <img className="w-28 md:w-36" src={mcLogo} alt="MagicCraft" />
             </Link>
@@ -183,22 +205,26 @@ const Header = () => {
                 )
               )}
             </div>
+
             <div className="flex items-center gap-5">
               <a
                 href="https://youtu.be/YAp7k3NsKpg?si=PKWHUbWH86j4iC2f"
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                <div className="flex cursor-pointer items-center gap-2 whitespace-nowrap ">
+                <div className="flex cursor-pointer items-center gap-2 whitespace-nowrap">
                   <PlayCircle size={16} />
                   <p className="text-sm md:text-base">MagicCraft Ecosystem</p>
                 </div>
               </a>
 
-              <Button className="hidden items-center gap-2 font-bold md:flex">
+              <Button onClick={connectWallet} className="hidden items-center gap-2 font-bold md:flex">
                 <Wallet size={18} />
-                <span className="text-base">Connect Wallet</span>
+                <span className="text-base">
+                  {walletAddress ? `Connected: ${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}` : 'Connect Wallet'}
+                </span>
               </Button>
+
               <button
                 onClick={openSidebar}
                 className="block shrink-0 xl:hidden"
@@ -209,76 +235,77 @@ const Header = () => {
             </div>
           </div>
         </nav>
-      </header>
-      <AnimatePresence>
-        {isSideMenuOpen ? (
-          <header>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[999] h-full w-full bg-black/20 backdrop-blur"
-            />
-            <motion.nav
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'just' }}
-              className="fixed right-0 top-0 z-[999] h-full w-[90%] max-w-lg overflow-auto rounded-bl-xl border-l border-[#9AD4FD] bg-gradient-to-b from-[#161242] to-[#060b31] py-6 pl-10 pr-10 text-white"
-            >
-              <div className="flex h-full flex-col gap-4">
-                <div className="flex items-center justify-between">
-                  <span className="font-serif text-[22px]">Menu</span>
-                  <X
-                    className="cursor-pointer"
-                    size={35}
-                    onClick={closeSidebar}
-                  />
-                </div>
-                <div className="h-[2px] w-full shrink-0 bg-gradient-to-r from-transparent via-[#5377BD] to-transparent" />
 
-                <div className="flex flex-col gap-y-8 pt-8">
-                  {commonMenuItemsNew.map((item) =>
-                    item?.submenu?.length > 0 ? (
-                      <NavMenuMobile
-                        key={item.title}
-                        item={item}
-                        closeSidebar={closeSidebar}
-                      />
-                    ) : (
-                      <a
-                        key={item.title}
-                        onClick={closeSidebar}
-                        href={item.path || '/'}
-                        rel="noreferrer noopener"
-                      >
-                        <div className="flex items-center gap-2">
-                          <div className="grid h-auto w-6 shrink-0 place-items-center">
-                            <img
-                              className="w-full"
-                              src={item.icon}
-                              alt={item.title}
-                            />
+        <AnimatePresence>
+          {isSideMenuOpen && (
+            <header>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-[999] h-full w-full bg-black/20 backdrop-blur"
+              />
+              <motion.nav
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: 'just' }}
+                className="fixed right-0 top-0 z-[999] h-full w-[90%] max-w-lg overflow-auto rounded-bl-xl border-l border-[#9AD4FD] bg-gradient-to-b from-[#161242] to-[#060b31] py-6 pl-10 pr-10 text-white"
+              >
+                <div className="flex h-full flex-col gap-4">
+                  <div className="flex items-center justify-between">
+                    <span className="font-serif text-[22px]">Menu</span>
+                    <X
+                      className="cursor-pointer"
+                      size={35}
+                      onClick={closeSidebar}
+                    />
+                  </div>
+                  <div className="h-[2px] w-full shrink-0 bg-gradient-to-r from-transparent via-[#5377BD] to-transparent" />
+
+                  <div className="flex flex-col gap-y-8 pt-8">
+                    {commonMenuItemsNew.map((item) =>
+                      item?.submenu?.length > 0 ? (
+                        <NavMenuMobile
+                          key={item.title}
+                          item={item}
+                          closeSidebar={closeSidebar}
+                        />
+                      ) : (
+                        <a
+                          key={item.title}
+                          onClick={closeSidebar}
+                          href={item.path || '/'}
+                          rel="noreferrer noopener"
+                        >
+                          <div className="flex items-center gap-2">
+                            <div className="grid h-auto w-6 shrink-0 place-items-center">
+                              <img
+                                className="w-full"
+                                src={item.icon}
+                                alt={item.title}
+                              />
+                            </div>
+                            <p className="text-[22px] font-normal">
+                              {item.title}
+                            </p>
                           </div>
-                          <p className="text-[22px] font-normal">
-                            {item.title}
-                          </p>
-                        </div>
-                      </a>
-                    )
-                  )}
-                </div>
+                        </a>
+                      )
+                    )}
+                  </div>
 
-                <div className="pt-16">
-                  <div className="py-8 text-sm font-bold">
-                    &copy; Copyright MagicCraft 2024
+                  <div className="pt-16">
+                    <div className="py-8 text-sm font-bold">
+                      &copy; Copyright MagicCraft 2024
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.nav>
-          </header>
-        ) : null}
-      </AnimatePresence>
+              </motion.nav>
+            </header>
+          )}
+        </AnimatePresence>
+      </header>
     </>
   )
 }

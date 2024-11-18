@@ -9,7 +9,7 @@
 // } from '@/services/state/store'
 // import { useState } from 'react'
 // import { loginCallback } from '../W3ModalProvider'
-// import { InjectedConnector } from 'wagmi/connectors/injected'
+// // import { InjectedConnector } from 'wagmi/connectors/injected'
 // import { cn, getMetamaskEthereum, sleep } from '@/lib/utils'
 // import { setModal } from '@/components/Modal/Modal'
 // import wombat from '../../assets/wallets/wombat.webp'
@@ -21,7 +21,7 @@
 // } from 'ovio-gg-web3'
 // // import { throwSignMessageAndLoginOvio } from '../../services/ovio'
 // import { throwSnack } from '../SnackBar/SnackSimple'
-// import { Link, useNavigate } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 // // import useLocalStorage from '../../hooks/useLocalStorage'
 // // import { LOCAL_STORAGE_LOGGING_IN_OVIO } from '../../utils/constants'
 // // import { TailButton } from '../Button/TailBtn'
@@ -78,12 +78,19 @@
 //     },
 //     connector: new InjectedConnector({
 //       options: {
-//         name: (detectedName) =>
+//         name: (detectedName: string | string[]) =>
 //           `Browser wallet (${
 //             typeof detectedName === 'string'
 //               ? detectedName
 //               : detectedName.join(', ')
 //           })`,
+//       },
+//       onError: (error: any) => {
+//         if (error.name === 'ConnectorNotFoundError') {
+//           throwSnack('error', 'No metamask connector found')
+//         } else {
+//           throwSnack('error', error.details)
+//         }
 //       },
 //     }),
 //   })
@@ -108,8 +115,8 @@
 //                   onClose()
 
 //                   const connect = async () => {
-//                     const res = await connector.connectAsync()
-//                     onConnect?.({ address: res.account })
+//                     const res = await connector.connectAsync({ connector: connector.connectors[0] })
+//                     onConnect?.({ address: res.accounts[0] })
 //                   }
 
 //                   if (!withLogin) {
@@ -133,7 +140,7 @@
 //                     </div>
 //                   </>
 //                 ) : (
-//                   connector.data?.connector?.name || 'Browser wallet'
+//                   connector.connectors[0]?.name || 'Browser wallet'
 //                 )}
 //               </TailButton>
 //             ) : null}
@@ -170,10 +177,9 @@
 //             )}
 //             {withLogin && (
 //               <Link className="contents" to="/register">
-//                 <TailButton
+//                 <button
 //                   onClick={onClose}
-//                   className="h-14 "
-//                   variant={'default'}
+//                   className="h-14"
 //                 >
 //                   Register
 //                 </TailButton>
@@ -221,3 +227,4 @@
 // }
 
 // export function useConnectWallet() {}
+
