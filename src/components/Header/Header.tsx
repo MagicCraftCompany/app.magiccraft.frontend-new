@@ -144,9 +144,6 @@ const commonMenuItemsNew: NavMenuItemProps[] = [
 ]
 
 
-
-
-
 const Header = () => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
   const [walletAddress, setWalletAddress] = useState<string | null>(null)
