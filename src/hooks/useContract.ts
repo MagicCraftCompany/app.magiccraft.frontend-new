@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react'
 import Web3 from 'web3'
+import { Contract } from 'web3-eth-contract';
+import { useWeb3React } from '@web3-react/core';
 // import useWeb3 from './useWeb3'
 import {
   getMCRTStakeAddress,
@@ -18,12 +20,21 @@ import magicNFTContractJson from '@/abi/MagicNFT.json'
 import marketplaceJson from '@/abi/Marketplace.json'
 import nftRedeemJson from '@/abi/NFTRedeem.json'
 import RevelationABIJson from '@/abi/Revelation.abi.json'
+import DOGE_NFT_ABI from '@/abi/DogeNFT.json';
 
 import { getWeb3NoAccount } from '@/lib/web3'
 import {
   VITE_GENESIS_CONTRACT_ADDRESS,
   VITE_REVELATION_CONTRACT_ADDRESS,
 } from '@/lib/constants'
+
+// Doge NFT contract addresses by chain
+const DOGE_NFT_ADDRESSES: { [chainId: number]: string } = {
+  1: '0x...', // Mainnet
+  56: '0x...', // BSC
+  // Add other network addresses as needed
+};
+
 //web3
 const web3 = (window as any).ethereum
   ? new Web3((window as any).ethereum)
@@ -93,5 +104,16 @@ export const useMarketplaceContract = () => {
 export const useNFTRedeemContract = () => {
   return useContract(nftRedeemJson.abi, getNFTRedeemAddress())
 }
+export const useDogeNft = (): Contract | null => {
+  const { chainId } = useWeb3React();
+  const contractAddress = chainId ? DOGE_NFT_ADDRESSES[chainId] : undefined;
+
+  if (!contractAddress) {
+    console.error(`Doge NFT contract is not available on chain ${chainId}`);
+    return null;
+  }
+
+  return useContract(DOGE_NFT_ABI, contractAddress);
+};
 
 export default useContract

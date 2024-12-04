@@ -8,6 +8,7 @@ import NFTPage from '@/pages/NFTPage'
 import ItemPage from '@/pages/ItemPage'
 import NotFoundPage from './pages/404Page'
 import PledgingPage from './pages/PledgingPage'
+import { DogeMint } from './pages/DogeNft'
 
 const Router = () => {
   return (
@@ -19,6 +20,8 @@ const Router = () => {
       <Route element={<PledgingPage />} path="/pledging" />
       <Route element={<InventoryPage />} path="/inventory" />
       <Route element={<MintingPage />} path="/mint" />
+      <Route element={<DogeMint />} path="/doge_mint" />
+
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
